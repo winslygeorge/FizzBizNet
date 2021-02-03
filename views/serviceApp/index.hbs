@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FizzBizNet: {{{row.BUSINESSNAME}}}</title>
+    <link rel="stylesheet" href="./../css/style.css">
+    <link rel="stylesheet" href="./../css/serviceApp.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    
+    <script src="./../js/main.js"></script>
+        <script src="./../js/handleservicebtns.js"></script>
+
+    <link rel="shortcut icon" href="./../images/networking-100.png" type="image/x-icon">
+</head>
+<body>
+    
+    <header class="headerContainer">
+        <div class="container1">
+             <div class="icon" >
+
+                <img src="./../images/{{{row.BRANDICON}}}" alt="" srcset="" width="100px" height="80px">
+            </div>
+        <div class="appbar">
+           
+            <div class="appname"><h1 class="bizTitle"><em>{{{row.BUSINESSNAME}}}</em></h1></div>
+        </div>
+
+          
+        <div class="menu">
+            <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;"/>
+            
+        </div>
+        <div class="profileIcon" style="order: 3; padding: 2%;">
+            <img src="./../images/user.svg" class="menuIcon" style="width: 40px;"/>
+        </div>
+    </div>
+                
+    <div class="menuList">
+        <div class="menu">
+            <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;"/>
+            
+        </div>
+        <a href="./../profile" class="menuitem"> <img   src="./../images/home.svg" alt="" srcset="" width="30px" style=""> <h4>Home</h4></a>
+        <a  class="menuitem" id="showToolbar" href="./../homezapps"> <img   src="./../images/customer.svg" alt="" srcset="" width="30px" style=""> <h4> Product&Services</h4></a>
+        <a href="./../home" class="menuitem"> <img   src="./../images/team.svg" alt="" srcset="" width="30px" style=""> <h4>About</h4></a>
+        <a href="./../Register" class="menuitem"> <img    src="./../images/add (1).svg" alt="" srcset="" width="30px" style=""> <h4> Register</h4></a>
+        <a href="./../login" class="menuitem"> <img   src="./../images/log-in.svg" alt="" srcset="" width="30px" style=""> <h4> SignIn </h4></a>
+        <a href="./../logout" class="menuitem"><img   src="./../images/log-out.svg" alt="" srcset="" width="30px" style=""> <h4>SignOut </h4></a>
+        </div>
+
+
+       
+       
+    </header>
+    
+    <menu type="toolbar" class="toolbarList">
+
+       
+        <div class="toolbar-sub-1" id="searchbar">
+            <input type="search" name="searchForService" id="">
+        </div>
+            <div class="toolbar-sub-1" id="wholesalemenu">WholeSales/Retails <div class="sub-wholesale-menu">
+                <a href="http://" >Online Stores</a>
+                <a href="http://" >Shopping Centers</a>
+            </div></div>
+            <div class="toolbar-sub-1" id="lifestylemenu">Life Style
+                <div class="sub-lifestyle-menu">
+                    <a href="http://" >Photography</a>
+                   <a href="http://"  >Hotel/Lounge</a>
+                   <a href="http://" >Bars/Liquor Stores</a>
+                    <div id="beautymenu" >Beauty
+                        <div class="sub-beauty-menu">
+                            <a href="http://" >MakeUp Artist</a>
+                           <a href="http://" >Saloon/Kinyozi</a>
+                            <a href="http://" >Accessories</a>
+                           
+                                <a href="http://">Clothlines/Shoes</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar-sub-1" id="technologymenu">Technology
+                <div class="sub-technology-menu">
+                  <a href="http://">Tech Stores</a>
+                   <a href="http://">Web Development</a>
+                   <a href="http://">Logo Design</a>
+                  <a href="http://">Graphic Design</a>
+                  <a href="http://">App Development</a>
+                   <a href="http://">Game Development</a>
+                    <a href="http://">Video Editing</a>
+                </div>
+            </div>
+            <div class="toolbar-sub-1" id="educationmenu">Education
+                <div class="sub-education-menu">
+                    <a href="http://">Schools</a>
+                    <a href="http://">Tuitors</a>
+                </div>
+            </div>
+            <div class="toolbar-sub-1" id="consultantmenu">Consult/advisor
+                <div class="sub-consultant-menu">
+                    <a href="http://">Health</a>
+                    <a href="http://">Imformation Technology(IT)</a>
+                    <a href="http://">Law</a>
+                    <a href="http://">Engineering</a>
+                   <a href="http://">Architect&Design</a>
+                    <a href="http://">Others</a>
+                </div>
+           
+            
+        </div>
+    </menu>
+    
+    <div class="body">
+
+    
+<div class="column1">
+
+
+
+</div>
+<main class="column1" id="main">
+
+   
+    <div  class="sub-column-1" id="missionSection">
+
+        <div class="sub-column-2"  id="companyIcon">
+            <img src="./../images/{{{row.BRANDICON}}}" alt="" srcset="">
+        </div>
+
+        <div  class="sub-column-2" id="mission">
+        <h3 class="subTitle">Mission</h3>
+        <p>{{{row.MISSION}}}</p>
+    </div>
+
+      <div  class="sub-column-2" id="quotes">
+            <h3 class="subTitle">Business Email</h3>
+            <p>
+               {{{row.BUSINESSEMAIL}}}
+            </p>
+        </div>
+            <div  class="sub-column-2" id="team">
+                    <h3 class="subTitle">Social Media</h3>
+                    <br>
+                    <br>
+                    <table width="76%" border="0" align="center" valign="bottom" cellspacing="0" cellpadding="0">
+                        <tr>
+                            {{#each social}}
+
+                           
+                        <td><a href={{{BUSINESSSOCIALMEDIALINK}}}><img src="./../images/{{{SOCIALNAME}}}.svg" alt="" style="width: 20px;"></a></td>
+                          
+                          {{/each}}
+                          
+                        </tr>
+                    </table>
+                </div>
+        <div  class="sub-column-2" id="quotes">
+            <h3 class="subTitle">Introduction</h3>
+            <p>
+               {{{row.SHORTINTRO}}}
+            </p>
+        </div>
+    </div>
+    <div  class="sub-column-1" id="serviceSection">
+
+        <h2 class="subTitle">Serices/Products</h2>
+
+        <div class="servicesCol">
+            {{#each services}}
+<div class="sub-column-2">
+    <h3>{{{SERVICENAME}}}</h3>
+    <img src="./../images/{{{SERVICEICON}}}" alt="" srcset="" >
+    <p>
+{{{SERVICEDESC}}}    </p>
+
+<br>
+<p style="color: white;">
+<b>Ksh. {{{PRICE}}}  <button id = "addorder" onclick="handleorderbtn({{{ID}}});">+</button></b></p>
+</div>
+
+{{/each}}
+
+
+        </div>
+    </div>
+    <div  class="sub-column-1" id="columnLocation">
+
+        <div  class="sub-column-2" id="locationDiv">
+
+            <h2>Location</h2>
+            <h3>Physical Location</h3>
+           <div id="location"> {{{row.CONTINENT}}} {{{row.COUNTRY}}} {{{row.TOWNCITY}}} <br> {{{row.ADDRESS}}}</div>
+
+<h3>Branch Location</h3>
+
+{{#each location}}
+
+           <div id="location"> {{{CONTINENT}}} {{{COUNTRY}}} {{{TOWNCITY}}} <br> {{{ADDRESS}}}</div>
+{{/each}}
+
+           <h3>
+               Range
+           </h3>
+            <div id="range">
+                Within {{{row.RANGE}}}
+            </div>
+           
+
+        </div>
+
+        <div class="sub-column-2" id="ratingDiv">
+
+            <h2>Rating</h2>
+
+            <div id="starRate">
+
+{{#if ratings}}
+{{#each ratings}}
+                <img src="./../images/star.svg" alt="" style="width: 20px;">
+                {{/each}}
+{{else}}
+
+ <img src="./../images/star (1).svg" alt="" style="width: 20px;">
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;">
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;">
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;">
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;">
+{{/if}}
+               
+
+                {{#if loggedUser.username}}
+                <button id = "rateBtn" onclick="handleRateBtn();">Rate</button>
+                {{/if}}
+                <div id="ratediv">
+
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;" id="one"  class="starCheck" onclick="startClicked('one')">
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;" id="two" class="starCheck" onclick="startClicked('two')">
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;" id="three" class="starCheck" onclick="startClicked('three')">
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;" id="four" class="starCheck" onclick="startClicked('four')">
+                <img src="./../images/star (1).svg" alt="" style="width: 20px;" id="five" class="starCheck" onclick="startClicked('five')">
+<button id = "subrateBtn" onclick="handleSubRateBtn('{{{loggedUser.username}}}', '{{{row.ID}}}');"> Submit Rate</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sub-column-2" id="reviewsDiv">
+
+            <h2>Reviews</h2>
+
+            <div id="reviewsPage">
+                <div class="addReview">
+                    <form action="?" method="post">
+                        <label for="comment">Comment</label>
+                        <p>
+
+                            <input type="text" name="comment" id="comment">
+
+                            <input type="button" value="submit" id = "commentBtn" onclick="handlecommentbtn({{{row.ID}}}, '{{{loggedUser.username}}}');">
+                        </p>
+                    </form>
+                </div>
+                <div class="review">
+                    <div class="clientDetail">
+
+                        <div class="profileImg">
+                            <img src="./../images/FizzBizNet.png" alt="" srcset="">
+
+                        </div>
+
+                        <div class="profilename"> <h5>Winslow Omondi</h5></div>
+                       
+                    </div>
+                   
+                    <p>Great work I Loved the deliverable</p>
+
+                </div>
+
+                <div class="review">
+                    <div class="clientDetail">
+
+                        <div class="profileImg">
+                            <img src="./../images/FizzBizNet.png" alt="" srcset="">
+
+                        </div>
+
+                        <div class="profilename"> <h5>Winslow Omondi</h5></div>
+                       
+                    </div>
+                   
+                    <p>Great work I Loved the deliverable</p>
+
+                </div>
+
+                <div class="review">
+                    <div class="clientDetail">
+
+                        <div class="profileImg">
+                            <img src="./../images/FizzBizNet.png" alt="" srcset="">
+
+                        </div>
+
+                        <div class="profilename"> <h5>Winslow Omondi</h5></div>
+                       
+                    </div>
+                   
+                    <p>Great work I Loved the deliverable</p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<div class="column1" id="gallery">
+    <h2>Galllery</h2>
+
+    <div  id="gallerycarosol">
+
+{{#each images}}
+        <img src="./../images/{{{IMAGELINK}}}" class="imagesIng" alt="" srcset="" id="img1">
+      {{/each}}
+       
+        <button id="imgBack">
+            <
+        </button>
+        <button id="imgNext">
+            >
+        </button>
+      
+    </div>
+
+</div>
+<div class="column1" id="reel">
+<h2>Reel</h2>
+<div class="videos">
+{{#each videos}}
+    <iframe width="420" height="345" src="{{{BUSINESSVIDEOLINK}}}?controls=1" class="video">
+    </iframe>
+{{/each}}
+    </div>
+</div>
+
+<div class="column1" id="order">
+
+    <h2>Order/Book</h2>
+
+</div>
+
+<div class="column1" id="related">
+<h2>Related</h2>
+
+<div class="relatedApp">
+  
+{{#each related}}
+    <div class="relateddiv">
+        <div class="relatedname"> {{{BUSINESSNAME}}}</div>
+        <a href="/app/{{{BUSINESSNAME}}}"><img src="./../images/{{{BRANDICON}}}" alt="" srcset=""></a>
+    </div>
+    {{/each}}
+
+</div>
+</div>
+<footer style="color: aquamarine;">
+    <table width="76%" border="0" align="center" valign="bottom" cellspacing="0" cellpadding="0">
+        <tr>
+        <td id="footer"><small>&copy; 2020 by Winslow Georgos. Proudly created with GeorgosTech.</small></td>
+        <td><img src="./../images/twitter.svg" alt="" style="width: 20px;"></td>
+            <td><img src="./../images/youtube.svg" alt="" style="width: 20px;"></td>
+            <td><img src="./../images/instagram.svg" alt="" style="width: 20px;"></td>
+            <td><img src="./../images/facebook.svg" alt="" style="width: 20px;"></td>
+        </tr>
+    </table></footer>
+
+    </div>
+    
+    
+
+  
+
+   <script src="./../js/serviceapp.js"></script>
+</body>
+</html>

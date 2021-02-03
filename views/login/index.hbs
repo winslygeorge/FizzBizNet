@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./../css/style.css">
+   
+    <script src="./../js/jquery.js"></script>
+    <script src="./../js/main.js"></script>
+
+    <link rel="stylesheet" href="./../css/addservice.css">
+    <script src="./../js/addservice.js"></script>
+</head>
+<body>
+    <header class="headerContainer">
+        <div class="container1">
+             <div class="icon" >
+
+                <img src="./../images/FizzBizNet.png" alt="" srcset="" width="100px" height="80px">
+            </div>
+        <div class="appbar">
+           
+            <div class="appname"><h1 class="bizTitle">FIZZBIZNET</h1></div>
+        </div>
+
+          
+        <div class="menu">
+            <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;"/>
+            
+        </div>
+        <div class="profileIcon" style="order: 3; padding: 2%;">
+            <img src="./../images/user.svg" class="menuIcon" style="width: 40px;"/>
+        </div>
+    </div>
+                
+    <div class="menuList">
+        <div class="menu">
+            <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;"/>
+            
+        </div>
+        <a href="./../profile" class="menuitem"> <img   src="./../images/home.svg" alt="" srcset="" width="30px" style=""> <h4>Home</h4></a>
+        <a  class="menuitem" id="showToolbar" href="./../homezapps"> <img   src="./../images/customer.svg" alt="" srcset="" width="30px" style=""> <h4> Product&Services</h4></a>
+        <a href="./../home" class="menuitem"> <img   src="./../images/team.svg" alt="" srcset="" width="30px" style=""> <h4>About</h4></a>
+        <a href="./../Register" class="menuitem"> <img    src="./../images/add (1).svg" alt="" srcset="" width="30px" style=""> <h4> Register</h4></a>
+        <a href="./../login" class="menuitem"> <img   src="./../images/log-in.svg" alt="" srcset="" width="30px" style=""> <h4> SignIn </h4></a>
+        <a href="./../logout" class="menuitem"><img   src="./../images/log-out.svg" alt="" srcset="" width="30px" style=""> <h4>SignOut </h4></a>
+        </div>
+
+
+       
+       
+    </header>
+
+      
+    <menu type="toolbar" class="toolbarList">
+
+       
+        <div class="toolbar-sub-1" id="searchbar">
+            <input type="search" name="searchForService" id="">
+        </div>
+            <div class="toolbar-sub-1" id="wholesalemenu">WholeSales/Retails <div class="sub-wholesale-menu">
+                <a href="http://" >Online Stores</a>
+                <a href="http://" >Shopping Centers</a>
+            </div></div>
+            <div class="toolbar-sub-1" id="lifestylemenu">Life Style
+                <div class="sub-lifestyle-menu">
+                    <a href="http://" >Photography</a>
+                   <a href="http://"  >Hotel/Lounge</a>
+                   <a href="http://" >Bars/Liquor Stores</a>
+                    <div id="beautymenu" >Beauty
+                        <div class="sub-beauty-menu">
+                            <a href="http://" >MakeUp Artist</a>
+                           <a href="http://" >Saloon/Kinyozi</a>
+                            <a href="http://" >Accessories</a>
+                           
+                                <a href="http://">Clothlines/Shoes</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar-sub-1" id="technologymenu">Technology
+                <div class="sub-technology-menu">
+                  <a href="http://">Tech Stores</a>
+                   <a href="http://">Web Development</a>
+                   <a href="http://">Logo Design</a>
+                  <a href="http://">Graphic Design</a>
+                  <a href="http://">App Development</a>
+                   <a href="http://">Game Development</a>
+                    <a href="http://">Video Editing</a>
+                </div>
+            </div>
+            <div class="toolbar-sub-1" id="educationmenu">Education
+                <div class="sub-education-menu">
+                    <a href="http://">Schools</a>
+                    <a href="http://">Tuitors</a>
+                </div>
+            </div>
+            <div class="toolbar-sub-1" id="consultantmenu">Consult/advisor
+                <div class="sub-consultant-menu">
+                    <a href="http://">Health</a>
+                    <a href="http://">Imformation Technology(IT)</a>
+                    <a href="http://">Law</a>
+                    <a href="http://">Engineering</a>
+                   <a href="http://">Architect&Design</a>
+                    <a href="http://">Others</a>
+                </div>
+           
+            
+        </div>
+    </menu>
+    
+
+
+    <div class="body">
+
+        <form action="/loginUser" method="get">
+
+<div class="form">
+
+   
+
+
+    <div class="addService" id="socialMedia"  style="height: fit-content;">
+
+
+        <div class="basicInfo">
+            <caption> <h2>Login</h2></caption>
+            <div class="serviceInt">
+
+                Enter your Login details.
+                <p style="color: red;">The details should be accurate and correct.</p>  
+                   </div>
+       <section>
+
+        <div class="inp">
+            <label for="companyName">Username or Email</label>
+            <br>
+            <input type="text" name="userName" id="" class="inputText" required>
+        </div>
+    
+        <div class="inp">
+            <label for="companyName">Password</label>
+            <br>
+            <input type="password" name="passwd" id="" class="inputText" required>
+        </div>
+
+           </section>
+           <div class="next" id="reset">
+            <input type="reset" value="Reset" class="btnNext">
+        </div>
+    
+        <div class="next" id="submit">
+            <input type="submit" value="Submit" class="btnNext">
+        </div>
+        </div>
+    </div>
+
+</div>
+        </form>
+        <footer style="color: aqua;">
+            <table width="76%" border="0" align="center" valign="bottom" cellspacing="0" cellpadding="0">
+                <tr>
+                <td id="footer"><small>&copy; 2020 by Winslow Georgos. Proudly created with GeorgosTech.</small></td>
+                <td><img src="./../images/twitter.svg" alt="" style="width: 20px;"></td>
+                    <td><img src="./../images/youtube.svg" alt="" style="width: 20px;"></td>
+                    <td><img src="./../images/instagram.svg" alt="" style="width: 20px;"></td>
+                    <td><img src="./../images/facebook.svg" alt="" style="width: 20px;"></td>
+                </tr>
+            </table></footer>
+    </div>
+
+    
+
+</body>
+</html>
