@@ -6,6 +6,13 @@ const clean  =  require('./../databasemanagementMYSQL/clean')
 
 const db  =  require('./../../oracleDBManager/dbmanager')
 
+const genEmail =  require('./../../email/genSendEmail')
+const optionGen =  require('./../../email/emailoptionsgenerator')
+const options =  new optionGen()
+
+
+const gen = new  genEmail()
+
 const path = require('path')
 
 const fs = require('fs')
@@ -24,6 +31,29 @@ const isbizSet = (req, res, next)=>{
         res.redirect('/AddService')
     }
 }
+
+const isAppID = (req, res, next)=>{
+
+    if(req.session.appid != null && req.session.appid != undefined){
+
+        next()
+    }else{
+
+        res.redirect('/AddService')
+    }
+}
+
+const isAuth = (req, res, next)=>{
+
+    if(req.session.isAuth){
+
+        next()
+    }else{
+
+        res.redirect('/login')
+    }
+}
+
 
 route.post('/addService',  (req, res)=>{
 
@@ -695,6 +725,259 @@ route.post('/placeorder', (req, res)=>{
     }
 
 })
+
+route.post('/postcomment', isAuth, (req, res)=>{
+
+var commment = {
+
+    id : new Date()* Math.round(Math.random()*30),
+
+    businessreviews : clean.CleanData(req.body.comment),
+
+    username : clean.CleanData(req.body.username),
+
+    businessappid : parseInt(req.body.appid),
+
+    profileimage : clean.CleanData(req.body.profileimage),
+
+  
+
+    tablename : "businessreviews",
+
+    operation : "insert"
+}
+
+
+if(commment.id != null && commment.id != undefined && commment.businessappid != null && commment.businessappid != undefined && commment.username != null && commment.username != undefined && commment.businessreviews != null && commment.businessreviews != undefined && commment.businessreviews != '' ){
+
+    dbcon.run(commment).then(function(results){
+
+        if(results.code == 200){
+
+
+            var commentquery = {
+    
+                tablename : "businessreviews",
+                operation : "select",
+            
+                fields : [],
+            
+                wfield : ["businessappid"],
+            
+                wvalue : [commment.businessappid]
+            }
+
+
+            dbcon.run(commentquery).then(function(results){
+
+                if(results.code == 200){
+
+             
+
+                    res.send({code : 200, result : results.result.rows})
+
+                }else{
+
+                    console.log(results.result)
+
+                    res.send({code : 101, result : "There are no comment..."})
+                }
+            })
+        
+
+        }else{
+
+            console.log(results.result)
+
+            res.send({code : 101, result : "please try again..."})
+        }
+    })
+
+}else{
+
+    res.send({code : 101, result : "please try again..."})
+}
+
+})
+
+route.post('/postemail', isAuth ,(req, res)=>{
+
+
+    var newemail = {
+
+        content : clean.CleanData(req.body.content),
+
+        email : clean.CleanData(req.body.email),
+
+        image : clean.CleanData(req.body.profileimage),
+
+        topic : clean.CleanData(req.body.topic),
+
+        username : clean.CleanData(req.body.username),
+
+        appemail : clean.CleanData(req.body.appemail)
+    }
+
+    var checkifnull = false
+    for (const key in newemail) {
+        if (newemail.hasOwnProperty(key)) {
+            const element = newemail[key];
+
+            if(element == null || element == undefined  ){
+
+
+                checkifnull = true
+            }
+            
+        }
+    }
+
+    if(checkifnull){
+
+        res.send({code : 101, result : "Empty Field"})
+    }else{
+
+
+        var email = {
+            from: 'Winslow  <omondigeorges041@gmail.com>',
+            to: 'omondiwinsly2@gmail.com',
+            subject: 'SUBJECT',
+            template: 'welcome',
+            context: {
+                name: 'YOUR NAME',
+                url: 'YOUR URL',
+                title : 'Welcome page'
+        
+            },
+        
+            attachments: [{
+                filename: 'FizzBizNet.png',
+                path: path.join(__dirname, './../../email/views/images/FizzBizNet.png'),
+                cid: 'logoimg' //same cid value as in the html img src
+            },
+            {
+                filename: 'image-02.jpg',
+                path: path.join(__dirname, './../../email/views/images/image-02.jpg'),
+                cid: 'img02' //same cid value as in the html img src
+            },
+            {
+                filename: 'image-03.jpg',
+                path: path.join(__dirname, './../../email/views/images/image-03.jpg'),
+                cid: 'img03' //same cid value as in the html img src
+            },
+            {
+                filename: 'icon-01.png',
+                path: path.join(__dirname, './../../email/views/images/icon-01.png'),
+                cid: 'icon01' //same cid value as in the html img src
+            },
+            {
+                filename: 'icon-02.png',
+                path: path.join(__dirname, './../../email/views/images/icon-02.png'),
+                cid: 'icon02' //same cid value as in the html img src
+            },
+            {
+                filename: 'icon-03.png',
+                path: path.join(__dirname, './../../email/views/images/icon-03.png'),
+                cid: 'icon03' //same cid value as in the html img src
+            },
+            {
+                filename: 'image-04.jpg',
+                path: path.join(__dirname, './../../email/views/images/image-04.jpg'),
+                cid: 'img04' //same cid value as in the html img src
+            },
+            {
+                filename: 'Betting-Business-Scientific-Games-2018-Notes-Redemption-696x465.jpg',
+                path: path.join(__dirname, './../../email/views/images/Betting-Business-Scientific-Games-2018-Notes-Redemption-696x465.jpg'),
+                cid: 'betbiz' //same cid value as in the html img src
+            },
+            {
+                filename: 'facebook2x.png',
+                path: path.join(__dirname, './../../email/views/images/facebook2x.png'),
+                cid: 'facebookid' //same cid value as in the html img src
+            },
+            {
+                filename: 'twitter2x.png',
+                path: path.join(__dirname, './../../email/views/images/twitter2x.png'),
+                cid: 'twitterid' //same cid value as in the html img src
+            },
+            {
+                filename: 'instagram2x.png',
+                path: path.join(__dirname, './../../email/views/images/instagram2x.png'),
+                cid: 'instagramid' //same cid value as in the html img src
+            },
+            {
+                filename: 'linkedin2x.png',
+                path: path.join(__dirname, './../../email/views/images/linkedin2x.png'),
+                cid: 'linkedlnid' //same cid value as in the html img src
+            },
+            {
+                filename: 'bee.png',
+                path: path.join(__dirname, './../../email/views/images/bee.png'),
+                cid: 'beeid' //same cid value as in the html img src
+            },
+            {
+                filename: 'hunters-race-MYbhN8KaaEc-unsplash_1.jpg',
+                path: path.join(__dirname, './../../email/views/images/hunters-race-MYbhN8KaaEc-unsplash_1.jpg'),
+                cid: 'huntersid' //same cid value as in the html img src
+            },
+            {
+                filename: 'featured-area-top.jpg',
+                path: path.join(__dirname, './../../email/views/images/featured-area-top.jpg'),
+                cid: 'areatopid' //same cid value as in the html img src
+            },
+            {
+                filename: 'featured-area-middle.jpg',
+                path: path.join(__dirname, './../../email/views/images/featured-area-middle.jpg'),
+                cid: 'middleid' //same cid value as in the html img src
+            }]
+        }
+        
+        gen.sendMail(options.generateEmailOpt(newemail.username+' <omondiwinsly2@gmail.com>', 'omondigeorges041@gmail.com', newemail.topic, 'welcome', email.context, email.attachments)).then(function(result){
+        
+            res.send({code : 200, result : "result"})
+            console.log(result)
+        }, function(error){
+
+            console.log(error)
+        })
+
+        
+    }
+
+})
+
+route.post('/postlike', isAuth, (req, res)=>{
+
+    var appid = parseInt( req.body.appid)
+
+    var newLike = {
+
+        id : new Date()* Math.round(Math.random()*17),
+        username : req.session.userDetails.username,
+        businessappid : appid,
+        tablename : 'applikes',
+        operation: 'insert'
+    }
+
+    if(newLike.id != null && newLike.id != undefined && newLike.username != null && newLike.username != undefined  && newLike.businessappid != null && newLike.businessappid != undefined ){
+
+        dbcon.run(newLike).then(function(results){
+
+            if(results.code == 200){
+
+                res.send({code : 200, result: "Like successful"})
+            }else{
+                res.send({code : 101, result: "already liked"})
+
+            }
+        })
+    }else{
+
+        res.send({code : 101, result: "error"})
+
+    }
+
+})
 module.exports = route
 
 
@@ -760,3 +1043,4 @@ function handleserviceImagesUpload(files){
     
     }
 }
+

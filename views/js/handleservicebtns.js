@@ -117,7 +117,106 @@ function startClicked(no){
 
 }
 
-function handlecommentbtn(id, username){
+function handlecommentbtn(id, username, profileimage){
 
-  alert(  $('#comment').val() + " : "  + id + " : "+ username ) 
+  var comment =  $('#comment').val() 
+
+  alert( comment+ " : "  + id + " : "+ username ) 
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      
+
+      var resq = JSON.parse(this.responseText)
+
+      if(resq.code == 200){
+
+        console.log(resq.result)
+
+        var jsonres =resq.result
+
+        var resultcounter =jsonres.length-1
+        var innert = ''
+        while( resultcounter >= 0){
+
+
+          var commentt = resq.result[resultcounter]
+          innert = innert + ` <div class="review">
+          <div class="clientDetail">
+
+              <div class="profileImg">
+                  <img src="./../images/${commentt.PROFILEIMAGE}" alt="" srcset="">
+
+              </div>
+
+              <div class="profilename"> <h5>${commentt.USERNAME}</h5></div>
+             
+          </div>
+         
+          <p>${commentt.BUSINESSREVIEWS}</p>
+
+      </div>`;
+
+          resultcounter--;
+        }
+
+        document.getElementById('reviewsSection').innerHTML = innert;
+
+
+      }else{
+
+        console.log(resq.result)
+
+      }
+    }
+  };
+  xhttp.open("POST", "/postcomment", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("comment="+comment+"&username="+username+"&appid="+id+"&profileimage="+profileimage);
+}
+
+function handleEmailBtn(appemail, useremail, username, profileimage){
+
+
+  var content =  $('#content').val()
+
+  var topic =  $('#topic').val()
+
+
+  var email =  ''
+
+  if($('#email').val()  == '' ){
+
+    email  = useremail
+  }else{
+
+    email  = $('#email').val()
+  }
+
+
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      
+
+      var resq = JSON.parse(this.responseText)
+
+      if(resq.code == 200){
+
+       alert('Email was posted successfully')
+      }else{
+
+        alert('Error submitting email...\n please try again')
+        console.log(resq.result)
+
+      }
+    }
+  };
+  xhttp.open("POST", "/postemail", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("email="+email+"&username="+username+"&appemail="+appemail+"&profileimage="+profileimage+"&topic="+topic+"&content="+content);
+
+
 }

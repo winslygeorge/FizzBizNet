@@ -303,6 +303,29 @@ float: right;
     border-radius: 4px;
 
 }
+#lable{
+
+    color: grey;
+    font-size: 1.2rem;
+    
+   
+}
+
+input{
+
+    width: 90%;
+    height: 34px ;
+
+    color: rgb(150, 70, 5);
+
+    font-size: 1rem;
+    border: 2px solid rgb(255, 255, 255);
+
+    font-style: oblique;
+
+
+    border-bottom: 2px solid rgb(152, 153, 151);
+}
 
 #rateBtn {
 
@@ -412,4 +435,70 @@ align-content: flex-start;
         width: 40%;
         margin: 3%;
     }
+}
+
+.next{
+
+    background-color: rgb(0, 130, 252);
+    width: 100px;
+    
+    padding: 3%;
+    text-align: center;
+    border-radius: 7px;
+    color: black;
+    position: relative;
+   float: left;
+    margin: auto;
+    font-weight: bold;
+    
+}
+
+.next:hover{
+
+    box-shadow: 2px 2px 2px grey;
+
+}
+
+#submit input{
+
+    background-color: lawngreen;
+
+    color: white;
+    border: 2px solid white;
+
+    border-radius: 4px;
+}
+#reset{
+
+    background-color: rgb(252, 0, 0);
+
+    color: white;
+    float: left;
+
+}
+#reset input{
+
+    background-color: rgb(141, 3, 3);
+    border: 2px solid white;
+
+    border-radius: 4px;
+}
+
+form{
+
+    width: 100%;
+   
+}
+
+.form{
+
+width: 100%;
+
+overflow: hidden;
+
+}
+.inp{
+
+    color: aqua;
+    margin: 4%;
 }

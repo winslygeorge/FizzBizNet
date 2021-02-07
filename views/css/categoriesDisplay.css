@@ -170,8 +170,12 @@ border-radius: 4px;
 
     width: 100%;
 
+   
+
     border-radius: 80%  0%  0% 80% ;
 }
+
+
 
 .details{
 
@@ -518,4 +522,9 @@ body{
 
     display: inline;
 }
+}
+
+.appbrandimg{
+
+    height: 180px;
 }

@@ -47,7 +47,7 @@ async  run(queryBody){
 
             console.log(query)
             results =  (await dbcon).execute(
-            query, { autoCommit: true }
+            query,{}, { autoCommit: true }
             ).then(function(success){
 
                 return {code : 200, result : success}

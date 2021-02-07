@@ -258,55 +258,37 @@
 
                             <input type="text" name="comment" id="comment">
 
-                            <input type="button" value="submit" id = "commentBtn" onclick="handlecommentbtn({{{row.ID}}}, '{{{loggedUser.username}}}');">
+                            <input type="button" value="submit" id = "commentBtn" onclick="handlecommentbtn({{{row.ID}}}, '{{{loggedUser.username}}}', '{{{loggedUser.profileimage}}}');">
                         </p>
                     </form>
                 </div>
-                <div class="review">
-                    <div class="clientDetail">
+                <div class="review" id="reviewsSection">
 
-                        <div class="profileImg">
-                            <img src="./../images/FizzBizNet.png" alt="" srcset="">
+{{#if comments}}
 
-                        </div>
+{{#each comments}}
+ <div class="review">
+          <div class="clientDetail">
 
-                        <div class="profilename"> <h5>Winslow Omondi</h5></div>
-                       
-                    </div>
-                   
-                    <p>Great work I Loved the deliverable</p>
+              <div class="profileImg">
+                  <img src="./../images/{{{PROFILEIMAGE}}}" alt="" srcset="">
 
-                </div>
+              </div>
 
-                <div class="review">
-                    <div class="clientDetail">
+              <div class="profilename"> <h5>{{{USERNAME}}}</h5></div>
+             
+          </div>
+         
+          <p>{{{BUSINESSREVIEWS}}}</p>
 
-                        <div class="profileImg">
-                            <img src="./../images/FizzBizNet.png" alt="" srcset="">
+      </div>
 
-                        </div>
+      {{/each}}
 
-                        <div class="profilename"> <h5>Winslow Omondi</h5></div>
-                       
-                    </div>
-                   
-                    <p>Great work I Loved the deliverable</p>
+{{else}}
 
-                </div>
-
-                <div class="review">
-                    <div class="clientDetail">
-
-                        <div class="profileImg">
-                            <img src="./../images/FizzBizNet.png" alt="" srcset="">
-
-                        </div>
-
-                        <div class="profilename"> <h5>Winslow Omondi</h5></div>
-                       
-                    </div>
-                   
-                    <p>Great work I Loved the deliverable</p>
+<p style="color: grey;">There are no comments...</p>
+{{/if}}
 
                 </div>
             </div>
@@ -346,7 +328,49 @@
 
 <div class="column1" id="order">
 
-    <h2>Order/Book</h2>
+    <h2>Contact</h2>
+
+<div class="form">
+
+   
+
+
+    <div class="addService" id="socialMedia"  style="height: fit-content;">
+
+
+        <div class="basicInfo">
+         
+       <section>
+
+        <div class="inp">
+            <div class="lable" for="companyName"> Email : ?optional</div>
+            <br>
+            <input type="email" name="email" id="email" class="inputText" >
+        </div>
+    
+
+        <div class="inp">
+            <div class="lable" for="companyName"> Topic : </div>
+            <br>
+            <input type="text" name="topic" id="topic" class="inputText" required>
+        </div>
+        <div class="inp">
+            <div class="lable" for="companyName">Content Body : </div>
+            <br>
+           <textarea name="content" id="content" cols="30" rows="10" style="width: 90%;" required></textarea>
+        </div>
+
+           </section>
+      
+    
+        <div class="next" id="submit">
+            <input type="button" value="Submit" class="btnNext" onclick="handleEmailBtn('{{{row.BUSINESSEMAIL}}}', '{{{loggedUser.email}}}', '{{{loggedUser.username}}}', '{{{loggedUser.profileimage}}}')">
+        </div>
+        </div>
+    </div>
+
+</div>
+      
 
 </div>
 

@@ -1,3 +1,4 @@
+const { parse } = require('cookie')
 const  express = require('express')
 const route = express.Router()
 
@@ -109,7 +110,7 @@ dbcon.run(query).then(function(results){
 route.get('/app/:id', (req, res)=>{
 
     let bizProfile = req.params.id 
-    var videos, services, images, location , related, social , ratings = null;
+    var videos, services, images, location , related, social , ratings , reviews= null;
     
     var query = {
     
@@ -286,18 +287,75 @@ route.get('/app/:id', (req, res)=>{
                      }
 
 
+                     var commentquery = {
+    
+                        tablename : "businessreviews",
+                        operation : "select",
+                    
+                        fields : [],
+                    
+                        wfield : ["businessappid"],
+                    
+                        wvalue : [row.ID]
+                    }
+        
+        
+                    dbcon.run(commentquery).then(function(results){
+        
+                        if(results.code == 200){
+        
+                     
+                            reviews = results.result.rows
+        
+                            console.log("results successful")
 
-                     console.log("results successful")
+                            if(req.session.userDetails != null && req.session.userDetails != undefined){
+
+
+                                var newLike = {
+
+                                    id : new Date()* Math.round(Math.random()*17),
+                                    username : req.session.userDetails.username,
+                                    businessappid : row.ID,
+                                    tablename : 'views',
+                                    operation: 'insert'
+                                }
+                            
+                                if(newLike.id != null && newLike.id != undefined && newLike.username != null && newLike.username != undefined  && newLike.businessappid != null && newLike.businessappid != undefined ){
+                            
+                                    dbcon.run(newLike).then(function(results){
+                            
+                                        if(results.code == 200){
+                            
+                                           console.log({code : 200, result: "Like successful"})
+                                        }else{
+                                            console.log({code : 101, result: "already liked"})
+                            
+                                        }
+                                    })
+                                }else{
+                            
+                                    console.log({code : 101, result: "error"})
+                            
+                                }
+                            
+                            }
 
                                     
 
-                     res.render('serviceApp/index', {ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
-
-
-
+                            res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
+       
+               
+                        }else{
+        
+                            console.log(results.result)
+        
+                            res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
+                        }
+                    })
 
                                                 }else{
-                                                    res.render('serviceApp/index', {ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
+                                                    res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
 
 
                                                 }
@@ -306,7 +364,7 @@ route.get('/app/:id', (req, res)=>{
                                     
                                         }else{
 
-                                            res.render('serviceApp/index', {ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
+                                            res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
 
                                         }
                                     })
@@ -315,7 +373,7 @@ route.get('/app/:id', (req, res)=>{
                                     }else{
 
                                         console.log(results.result)
-                                        res.render('serviceApp/index', {row : row, loggedUser: req.session.userDetails})
+                                        res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
 
 
                                     }
@@ -325,7 +383,7 @@ route.get('/app/:id', (req, res)=>{
                                     }else{
 
                                         console.log(results.result)
-                                        res.render('serviceApp/index', {row : row, loggedUser: req.session.userDetails})
+                                        res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
 
                                     }
                                 })
@@ -336,7 +394,7 @@ route.get('/app/:id', (req, res)=>{
 
                                 console.log(results.result)
 
-                                res.render('serviceApp/index', {row : row, loggedUser: req.session.userDetails})
+                                res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
                             }
                         })
 
@@ -344,7 +402,7 @@ route.get('/app/:id', (req, res)=>{
 
                         console.log(results.result)
 
-                        res.render('serviceApp/index', {row : row, loggedUser: req.session.userDetails})
+                        res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
                     }
                 })
 
@@ -353,7 +411,7 @@ route.get('/app/:id', (req, res)=>{
 
                 console.log(results.result)
 
-                res.render('serviceApp/index', {row : row, loggedUser: req.session.userDetails})
+                res.render('serviceApp/index', {comments: reviews, ratings : ratings, loggedUser : req.session.userDetails, social : social, row : row, videos : videos, images : images, services: services, location: location, related : related, loggedUser: req.session.userDetails})
 
 
             }
@@ -372,5 +430,87 @@ route.get('/app/:id', (req, res)=>{
         console.log(err)
         
     });
+    })
+
+    route.get('/apps/:id', (req, res)=>{
+
+var catid = req.params.id
+
+var wholesales = []
+var  lifestyle = []
+var  beauty =[]
+var  technology = []
+var  education = []
+var consultancy = []
+if(catid != null && catid != undefined && catid != ''){
+
+
+    if(catid.match('all')){
+
+
+                var appsquery = {
+    
+                    tablename : "businessapp",
+                    operation : "select",
+                
+                    fields : []
+                }
+
+                dbcon.run(appsquery).then(function(results){
+
+                    if(results.code  == 200){
+
+                        var apps = results.result.rows
+
+                        var appcounter = 0
+
+                        while(appcounter < apps.length){
+
+                            var app = apps[appcounter]
+                           
+                            if(`${apps[appcounter].BUSINESSCATEGORY}`.startsWith('1')){
+
+
+                                wholesales.push(app)
+                            }else if(`${apps[appcounter].BUSINESSCATEGORY}`.startsWith('2')){
+
+                                lifestyle.push(app)
+                            }else if(`${apps[appcounter].BUSINESSCATEGORY}`.startsWith('3')){
+
+                             beauty.push(app)
+                            }else if(`${apps[appcounter].BUSINESSCATEGORY}`.startsWith('4')){
+
+                                technology.push(app)
+                            }else if(`${apps[appcounter].BUSINESSCATEGORY}`.startsWith('5')){
+
+                                education.push(app)
+                            }else if(`${apps[appcounter].BUSINESSCATEGORY}`.startsWith('6')){
+
+                                consultancy.push(app)
+                            }else{
+
+                                console.log("Category id not defined")
+
+                            }
+
+                            appcounter++;
+                        }
+
+
+                        res.render( 'homezapps/index',{loggedUser : req.session.userDetails, appscat : {wholesales : wholesales, beauty : beauty, lifestyle : lifestyle, technology : technology, education : education, consultancy: consultancy} })
+                    }else{
+
+                        res.send({error : 404, text : "Could not get the apps try again..."})
+
+                    }
+
+                })
+
+            }
+
+}else{
+
+    res.send({error : 404, text : "App does not Exist"})
+}
     })
 module.exports = route;

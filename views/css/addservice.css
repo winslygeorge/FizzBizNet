@@ -84,7 +84,7 @@ input{
 
 input:focus{
 
-    border-bottom: 2px solid rgba(71, 134, 9, 0.521);
+    border: 2px solid rgba(71, 134, 9, 0.521);
 
 }
 
