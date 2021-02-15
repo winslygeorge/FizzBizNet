@@ -54,7 +54,9 @@ form.parse(req, function(err, fields, files){
     conpasswd : clean.CleanData(new String(fields.conUserPasswd))
     }
 
-    var fname, lname, uname, email, mobTel, wokTel, youtube, continent, country, town, dob, address, passwd, profileImg , facebook, instagram, twitter, linkedln, github= null;
+    var fname, lname, uname, email, mobTel, youtube, continent, country, town, dob, address, passwd, profileImg , facebook, instagram, twitter, linkedln, github= null;
+
+    var wokTel = null
     var fnameErr, lnameErr, unameErr, emailErr,conemailErr, mobTelErr, wokTelErr, continentErr, countryErr, townErr, dobErr, addressErr, passwdErr, conpasswdErr, profileImgErr = null;
 
 //first Name Validation
@@ -225,7 +227,7 @@ address = newUser.address
 
 //submit validation
 
-if(fname!=null && lname!=null && uname!=null && email!=null && wokTel!=null && continent!=null && country!=null && town!=null && address!=null && passwd !=null && dob !=null && profileImg !=null ){
+if(fname!=null && lname!=null && uname!=null && email!=null && mobTel !=null && continent!=null && country!=null && town!=null && address!=null && passwd !=null && dob !=null && profileImg !=null ){
 
 
   
@@ -281,7 +283,7 @@ var profileIg = uname+'_'+Date.now()+'_'+Math.round(Math.random()* 1E9)+'.'+prof
             })
             console.log(feedback.result)
 
-            res.send("User Successfully Registered")
+            res.redirect('/login')
         }else{
 
             res.render('Register/index', {error : "Username or Email already Exists",profileError: profileImgErr,fnErr: fnameErr, lnErr: lnameErr, unErr: unameErr, emErr: emailErr, contErr: continentErr, passErr: passwdErr, wokrTelErr: wokTelErr, mobileErr: mobTelErr, firstName: fname, lastName: lname, userName: uname, email: email, confimEmail: confirmEmail, country: country, continent: continent, townCity: town, address: newUser.address, wokyTel: wokTel, mobyTel: mobTel , profileImage: profileImg})

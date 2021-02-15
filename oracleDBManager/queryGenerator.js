@@ -81,7 +81,7 @@ class QueryGenerator{
 
     }else if(operation.match("delete")){
 
-        return  `DELETE FROM ${tablename} where ${wfield} = ${wvalue}`
+        return  [`DELETE FROM ${tablename} where ${wfield} = :id`, [wvalue]]
 
     }else if(operation.match("update")){
 
@@ -130,7 +130,38 @@ if(x != 0){
 
     if(reqbody["operation"].match("update")){
 
-        return [`UPDATE ${reqbody["tablename"]} SET (${noFields}) VALUES (${noValues}) WHERE ${reqbody["where"]} = :${reqbody["val"]}`, [reqbody["val"]]]
+var setWhere = ''
+var setData = ''
+var data = []
+var counterUpdate = 0
+        for (const key in reqbody) {
+            if (reqbody.hasOwnProperty(key)) {
+    
+                const element = reqbody[key];
+                if(!key.match("operation") && !key.match("tablename") && !key.match("where") && !key.match("val")){
+                
+            if(counterUpdate == 0){
+
+                setData = setData + ' '+ key + ' = :'+ key 
+            }else{
+
+                setData = setData + ' , ' + key + ' = :'+ key 
+            }
+                
+                data.push(element)
+
+                counterUpdate++;
+                }else if(key.match("where")){
+    
+    
+                    setWhere = ' where ' + element + ' = :id'
+
+                    data.push(reqbody['val'])
+                }
+            }
+        }
+
+        return [`UPDATE ${reqbody["tablename"]} SET ${setData} WHERE ${reqbody["where"]} = :val`, data]
 
     }else if(reqbody["operation"].match("insert")){
 

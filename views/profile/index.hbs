@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+
+        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=60292bb6f8ce400012e81636&product=inline-share-buttons" async="async"></script>
+
     <link rel="stylesheet" href="./../css/style.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
@@ -11,9 +14,11 @@
     <script src="./../js/main.js"></script>
 
     <script src="./../js/categoryApps.js"></script>
+
     <link rel="stylesheet" href="./../css/categoriesDisplay.css">
     <link rel="shortcut icon" href="./../images/networking-100.png" type="image/x-icon">
     <link rel="stylesheet" href="./../css/profile.css">
+
 </head>
 <body>
 
@@ -52,7 +57,8 @@
     </header>
 
 
-    <div class="slideExplorenav">
+   
+     <div class="slideExplorenav">
 
         <div class="sliden">
             <div class="slidemenu">
@@ -66,18 +72,26 @@
            
         </div>
 
-        <a href="./../AddService" id="addService"><img   src="./../images/add.svg" alt="" srcset="" width="40px" style=""> <h4>New Service</h4></a>
+        <a href="/AddService" id="addService"><img   src="./../images/add.svg" alt="" srcset="" width="40px" style=""> <h4>New Service</h4></a>
+{{#if loggedUser}}
+        <a href="/profile/{{{loggedUser.username}}}"> <img  class="iconsI" src="./../images/customer.svg" alt="" srcset="" width="40px" style=""> <h4>My Page</h4></a>
+{{else}}
 
-        <a href="./../profile"> <img  class="iconsI" src="./../images/customer.svg" alt="" srcset="" width="40px" style=""> <h4>My Page</h4></a>
+        <a href="/login"> <img  class="iconsI" src="./../images/customer.svg" alt="" srcset="" width="40px" style=""> <h4>My Page</h4></a>
+{{/if}}
 
-        <a href="./../homezapps/index.html"> <img  class="iconsI" src="./../images/home.svg" alt="" srcset="" width="40px" style=""> <h4>Home</h4></a>
+        <a href="/apps/all"> <img  class="iconsI" src="./../images/home.svg" alt="" srcset="" width="40px" style=""> <h4>Home</h4></a>
+        <a href="./../logout" class="menuitem"><img   src="./../images/log-out.svg" alt="" srcset="" width="40px" style=""> <h4>SignOut </h4></a>
 
-        <a id="share" > <img  class="iconsI" src="./../images/share (1).svg" alt="" srcset="" width="40px" style=""> <h4>Share</h4></a>
+        <a id="share" onclick="openShare()" > <img  class="iconsI" src="./../images/share (1).svg" alt="" srcset="" width="40px" style=""> <h4>Share</h4></a>
     </div>
    
     <div class="body">
+
+        <div class="sharethis-inline-share-buttons" ></div>
         <div class="bodyMain">
       
+
 
         
 
@@ -91,8 +105,13 @@
 
               </div>
               <div class="profileMe">
+                  {{#if loggedUser}}
                 <h4>{{{loggedUser.username}}}</h4>
-                <img src="./../images/{{{loggedUser.profileimage}}}" alt="" srcset="" width="40px">
+                <img src="./../images/{{{loggedUser.profileimage}}}" alt="" srcset="" width="40px"  height="40px" style="border-radius: 100%;">
+                {{else}}
+ <h4>Guest</h4>
+                <img src="./../images/user.svg" alt="" srcset="" width="40px">
+                {{/if}}
               </div>
             </div>
         </div>
@@ -155,14 +174,18 @@
                 <h2>Liked</h2>
                 <p>These are the business profile that you have Liked</p>
                 <div  class="sub-column-2" id="mission">
+                    {{#if likes}}
+                    {{#each likes}}
                     <div class="details">
-                        <img src="./../images/businessgazzete.png.jpg" alt="" srcset="" class="imgIconCompany">
-                        <div class="headingIcon">FizzBiz Network <span class="followBtn">visit</span></div>
+                        <img src="./../images/{{{APPIMAGE}}}" alt="" srcset="" class="imgIconCompany" height="40px">
+                        <div class="headingIcon">{{{APPNAME}}} <a href="/app/{{{APPNAME}}}"> <span class="followBtn">  visit</span></a></div>
                     </div>
-                    <div class="details">
-                        <img src="./../images/businessgazzete.png.jpg" alt="" srcset="" class="imgIconCompany">
-                        <div class="headingIcon">FizzBiz Network <span class="followBtn">visit</span></div>
-                    </div>
+                    {{/each}}
+                    {{else}}
+
+<p style="color: antiquewhite;">You have not liked any business app yet...</p>
+                    {{/if}}
+                   
                 </div>
               
 
@@ -174,15 +197,20 @@
                 <h2>Visited</h2>
                 <p>These are the business profile that you have Visited</p>
                 <div  class="sub-column-2" id="mission">
+                    {{#if views}}
+                    {{#each views}}
                     <div class="details">
-                        <img src="./../images/businessgazzete.png.jpg" alt="" srcset="" class="imgIconCompany">
-                        <div class="headingIcon">FizzBiz Network <span class="followBtn">visit</span></div>
+                        <img src="./../images/{{{APPIMAGE}}}" alt="" srcset="" class="imgIconCompany" height="40px">
+                        <div class="headingIcon">{{{APPNAME}}}  <a href="/app/{{{APPNAME}}}"> <span class="followBtn">visit</span></a></div>
                     </div>
-                    <div class="details">
-                        <img src="./../images/businessgazzete.png.jpg" alt="" srcset="" class="imgIconCompany">
-                        <div class="headingIcon">FizzBiz Network <span class="followBtn">visit</span></div>
-                    </div>
-                
+                    {{/each}}
+                    {{else}}
+
+<p style="color: antiquewhite;">You have not viewed any business app yet</p>
+
+
+                    {{/if}}
+                   
                 </div>
            
             </div>

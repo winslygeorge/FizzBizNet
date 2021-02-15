@@ -46,9 +46,13 @@ route.get('/AddService', isAuth, (req, res)=>{
 
 route.get('/Register', (req, res)=>{
 
-    res.render('Register/index', {name: "winslow"});
+    res.render('Register/index', {loggedUser: req.session.userDetails});
 })
 
+route.get('/', (req, res)=>{
+
+    res.render('home/index', {loggedUser: req.session.userDetails});
+})
 route.get('/login', (req, res)=>{
 
     res.render('login/index', {name: "winslow"});
@@ -95,9 +99,59 @@ var query = {
 
 dbcon.run(query).then(function(results){
 
+    var profile = results.result.rows[0]
+
  if(results.code == 200){
 
-    res.render('profile/index', {row : results.result.rows[0], loggedUser: req.session.userDetails})
+    var selectLiked = {
+
+        operation : 'select',
+        tablename : 'applikes',
+        fields : [],
+        wfield : ['username'],
+        wvalue : [profile.USERNAME]
+    }
+
+    dbcon.run(selectLiked).then(function(results){
+
+        var profilelikes = results.result.rows
+
+        if(results.code == 200){
+
+            var selectViews = {
+
+                operation : 'select',
+                tablename : 'views',
+                fields : [],
+                wfield : ['username'],
+                wvalue : [profile.USERNAME]
+            }
+
+            dbcon.run(selectViews).then(function(results){
+
+                if(results.code == 200){
+
+                    var profileviews = results.result.rows
+
+                    res.render('profile/index', {views : profileviews, likes : profilelikes, row : profile, loggedUser: req.session.userDetails})
+
+
+                }else{
+
+                    console.log(results.result)
+                    res.render('profile/index', {views : profileviews, likes : profilelikes, row : profile, loggedUser: req.session.userDetails})
+
+
+                }
+            })
+
+        }else{
+
+            res.render('profile/index', {row : profile, loggedUser: req.session.userDetails})
+
+        }
+    })
+
  }
 
 }, function(err){
@@ -317,6 +371,8 @@ route.get('/app/:id', (req, res)=>{
                                     id : new Date()* Math.round(Math.random()*17),
                                     username : req.session.userDetails.username,
                                     businessappid : row.ID,
+                                    appname : row.BUSINESSNAME,
+                                    appimage : row.BRANDICON,
                                     tablename : 'views',
                                     operation: 'insert'
                                 }
@@ -496,8 +552,85 @@ if(catid != null && catid != undefined && catid != ''){
                             appcounter++;
                         }
 
+                        var catsapps =  {Wholesales : wholesales, Beauty : beauty, Lifestyle : lifestyle, Technology : technology, Education : education, Consultancy: consultancy} 
 
-                        res.render( 'homezapps/index',{loggedUser : req.session.userDetails, appscat : {wholesales : wholesales, beauty : beauty, lifestyle : lifestyle, technology : technology, education : education, consultancy: consultancy} })
+
+                        for (const key in catsapps) {
+                            if (catsapps.hasOwnProperty(key)) {
+                                const element = catsapps[key];
+
+                                element.forEach(app => {
+                         
+                                    var likequery = {
+                
+                                        tablename : "applikes",
+                                        operation : "select",
+                                    
+                                        fields : [],
+                                    
+                                        wfield : ["businessappid"],
+                                    
+                                        wvalue : [app.ID]
+                                    }
+            
+                                    dbcon.run(likequery).then( async function(results){
+            
+                                        if(results.code  == 200){
+            
+                                            let likescount = await results.result.rows.length
+            
+                                            console.log(likescount)
+            
+                                            app.likes = likescount
+            
+                                            var viewquery = {
+                
+                                        tablename : "views",
+                                        operation : "select",
+                                    
+                                        fields : [],
+                                    
+                                        wfield : ["businessappid"],
+                                    
+                                        wvalue : [app.ID]
+                                    }
+            
+                                    dbcon.run(viewquery).then(async function(results){
+            
+                                        if(results.code == 200){
+            
+                                            let viewcounts =  await results.result.rows.length
+            
+                                            console.log(viewcounts)
+            
+            
+                                            app.views = viewcounts
+            
+                                        }else{
+            
+                                            console.log(results.result)
+                                        }
+                                    })
+                                        }else{
+            
+                                            console.log(results.result)
+                                        }
+                                    })
+            
+                                    
+            
+            
+                                 });
+            
+                                
+                            }
+                        }
+
+                       setTimeout(function(){
+
+                        res.render( 'homezapps/index',{loggedUser : req.session.userDetails, appscat : catsapps})
+
+                       }, 7000) 
                     }else{
 
                         res.send({error : 404, text : "Could not get the apps try again..."})
@@ -506,11 +639,303 @@ if(catid != null && catid != undefined && catid != ''){
 
                 })
 
+            }else{
+
+                var categoryquery = {
+    
+                    tablename : "businesscategories",
+                    operation : "select",
+                
+                    fields : [],
+                
+                    wfield : ["id"],
+                
+                    wvalue : [parseInt(catid)]
+                }
+
+                dbcon.run(categoryquery).then(function(results){
+
+                    if(results.code == 200 ){
+
+                        var catsubcategory = results.result.rows[0].SUBCATEGORY
+
+
+
+                var appquery = {
+    
+                    tablename : "businessapp",
+                    operation : "select",
+                
+                    fields : [],
+                
+                    wfield : ["businesscategory"],
+                
+                    wvalue : [parseInt(catid)]
+                }
+
+                dbcon.run(appquery).then( async function(results){
+
+                    if(results.code == 200){
+
+                        let apps = results.result.rows
+
+
+                  await apps.forEach(app => {
+                         
+                        var likequery = {
+    
+                            tablename : "applikes",
+                            operation : "select",
+                        
+                            fields : [],
+                        
+                            wfield : ["businessappid"],
+                        
+                            wvalue : [app.ID]
+                        }
+
+                        dbcon.run(likequery).then( async function(results){
+
+                            if(results.code  == 200){
+
+                                let likescount = await results.result.rows.length
+
+                                console.log(likescount)
+
+                                app.likes = likescount
+
+                                var viewquery = {
+    
+                            tablename : "views",
+                            operation : "select",
+                        
+                            fields : [],
+                        
+                            wfield : ["businessappid"],
+                        
+                            wvalue : [app.ID]
+                        }
+
+                        dbcon.run(viewquery).then(async function(results){
+
+                            if(results.code == 200){
+
+                                let viewcounts =  await results.result.rows.length
+
+                                console.log(viewcounts)
+
+
+                                app.views = viewcounts
+
+                            }else{
+
+                                console.log(results.result)
+                            }
+                        })
+                            }else{
+
+                                console.log(results.result)
+                            }
+                        })
+
+                        
+
+
+                     });
+
+                     console.log('working...')
+                     
+setTimeout(function(){
+
+    res.render('homezapps/index', {loggedUser: req.session.userDetails, appscat: {subcategories : apps}})
+
+}, 3000)
+                       
+
+                    }else{
+
+                        res.send({code : 101, error: 'The apps does not exit'})
+
+
+                    }
+                })
+
+
+                    }else{
+
+                        res.send({code : 101, error: 'The category does not exit'})
+                    }
+                })
+
+
             }
 
 }else{
 
     res.send({error : 404, text : "App does not Exist"})
 }
+    })
+
+
+    route.get('/usersorders/:id', isAuth, (req, res)=>{
+
+        
+        var username =  req.params.id
+
+        if(username.match(req.session.userDetails.username)){
+
+
+            var calloreder = {
+
+                tablename : 'bookings',
+                operation : 'select',
+
+                fields : [],
+                wfield : ['username'],
+
+                wvalue : [username]
+            }
+
+            dbcon.run(calloreder).then( async function(results){
+
+                if(results.code == 200){
+
+                    var orders = results.result.rows
+
+                    var retrievedServiceDetailarray = []
+
+                    var orderCounter = 0
+                  await orders.forEach(order => {
+
+                        var retrieveOrderdetails = {
+
+                            operation : 'select',
+                            tablename : 'services',
+                            fields : [],
+                            wfield : ['id'],
+                            wvalue : [order.SERVICEID]
+                        }
+
+                      dbcon.run(retrieveOrderdetails).then(async function(results){
+
+                            if(results.code == 200){
+
+                                var  app = results.result.rows[0]
+
+                                app.quantity = order.QUANTITY
+
+                                app.orderid = order.ID
+
+                                app.ischeckedout = order.CHECKEDOUT
+
+                             await  retrievedServiceDetailarray.push(app)
+
+                             
+                            }
+                        })
+
+                        
+
+              
+                       
+                    });
+
+                    setTimeout(function(){
+
+                        console.log(retrievedServiceDetailarray)
+
+                        return res.render('order/index', { loggedUser : req.session.userDetails, orders : retrievedServiceDetailarray})
+       
+                    }, 7000)
+
+
+
+                }else{
+
+                    res.render('order/index', {error : 'No order was found'})
+                }
+            })
+
+        }else{
+
+            res.redirect('/profile/'+req.session.userDetails.username)
+        }
+
+    })
+
+    route.get('/businessorders/:id', (req, res)=>{
+
+        var businessappid = req.params.id
+
+        var selectcheckedorders = {
+
+            operation : 'select',
+
+            tablename : 'bookings',
+
+            fields : [],
+
+            wfield : ['businessappid'],
+
+            wvalue : [parseInt(businessappid)]
+        }
+
+        if(businessappid != null && businessappid != undefined){
+
+            dbcon.run(selectcheckedorders).then(function(results){
+
+                if(results.code == 200){
+
+                    var checkedorders = results.result.rows
+
+                    res.render('businessorders/index', {loggedUser : req.session.userDetails, orders : checkedorders})
+                }else{
+
+                    console.log(results.result)
+                    res.send({code : 101, error : 'Error getting orders ...please try again'})
+                }
+            })
+        }else{
+
+            res.redirect('/apps/all')
+        }
+    })
+
+    route.get('/businesscartorders/:id', (req, res)=>{
+
+        var businessappid = req.params.id
+
+        var selectcartorders = {
+
+            operation : 'select',
+
+            tablename : 'ordercart',
+
+            fields : [],
+
+            wfield : ['appid'],
+
+            wvalue : [parseInt(businessappid)]
+        }
+
+        if(businessappid != null && businessappid != undefined){
+
+            dbcon.run(selectcartorders).then(function(results){
+
+                if(results.code == 200){
+
+                    var checkedorders = results.result.rows
+
+                    res.render('businesscartorder/index', {loggedUser : req.session.userDetails, orders : checkedorders})
+                }else{
+
+                    console.log(results.result)
+                    res.send({code : 101, error : 'Error getting orders ...please try again'})
+                }
+            })
+        }else{
+
+            res.redirect('/apps/all')
+        }
     })
 module.exports = route;

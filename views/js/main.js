@@ -119,3 +119,8 @@ function carousel() {
   
     setTimeout(carousel, 8000);    
   }
+
+  function openShare(){
+
+    $('.sharethis-inline-share-buttons').fadeToggle();
+  }

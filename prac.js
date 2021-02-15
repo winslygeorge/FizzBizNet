@@ -8,16 +8,16 @@ const serveRequest = new handleDbReq()
 var j = {
 
     
-    tablename: "BUSINESSCATEGORIES",
-    operation: "insert",
+    tablename: "bookings",
+    operation: "update",
    
-    ID : ""+id+"",
-    MAINCATEGORY: "wholesales",
+    quantity : 9,
 
-    SUBCATEGORY: "shopping centers"
+    
 
-   
+    where : "id",
 
+    val : 12902199484552
 }
 
 var k = {
@@ -27,9 +27,9 @@ var k = {
     operation : "select"
 }
 
-serveRequest.run(k).then(function(suc){
+serveRequest.run(j).then(function(suc){
 
-    console.log(suc.code)
+    console.log(suc.result)
 }, function(err){
 
     console.log(err)

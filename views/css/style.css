@@ -291,8 +291,8 @@ background-repeat: no-repeat;
 }
 .menuList, .revMenuList{
 
-    position: fixed;
-    height: 100%;
+    position: absolute;
+    height: 100vh;
     width: fit-content;
 
     background-color: #05243f;
@@ -605,4 +605,22 @@ footer{
    .starErr{
 
     color: red;
+   }
+
+   .sharethis-inline-share-buttons{
+
+    background-color: black;
+    width: 90%;
+    opacity: 0.4;
+    margin: auto;
+    justify-content: center;
+    padding: 2%;
+    display: none;
+   }
+
+   .loggeduserIcon{
+
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
    }

@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 });
 
-function handleLike( id){
+function handleLike( id, appname, appimage){
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -44,7 +44,7 @@ function handleLike( id){
     };
     xhttp.open("POST", "/postlike", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("appid="+id);
+    xhttp.send("appid="+id+"&appname="+appname+"&appimage="+appimage);
   
   
 }

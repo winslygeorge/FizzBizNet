@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Categories</title>
-
-            <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=60292bb6f8ce400012e81636&product=inline-share-buttons" async="async"></script>
-
+    <title>Order :  Brightlife</title>
     <link rel="stylesheet" href="./../css/style.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
@@ -15,7 +12,12 @@
 
     <script src="./../js/categoryApps.js"></script>
     <link rel="stylesheet" href="./../css/categoriesDisplay.css">
+    <link rel="stylesheet" href="./../css/businessorders.css">
     <link rel="shortcut icon" href="./../images/networking-100.png" type="image/x-icon">
+
+    <script src="./../js/handlebusinessorder.js"></script>
+        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=60292bb6f8ce400012e81636&product=inline-share-buttons" async="async"></script>
+
 </head>
 <body>
     
@@ -53,7 +55,9 @@
        
        
     </header>
-     <div class="slideExplorenav">
+
+
+    <div class="slideExplorenav">
 
         <div class="sliden">
             <div class="slidemenu">
@@ -68,22 +72,15 @@
         </div>
 
         <a href="/AddService" id="addService"><img   src="./../images/add.svg" alt="" srcset="" width="40px" style=""> <h4>New Service</h4></a>
-{{#if loggedUser}}
-        <a href="/profile/{{{loggedUser.username}}}"> <img  class="iconsI" src="./../images/customer.svg" alt="" srcset="" width="40px" style=""> <h4>My Page</h4></a>
-{{else}}
 
-        <a href="/login"> <img  class="iconsI" src="./../images/customer.svg" alt="" srcset="" width="40px" style=""> <h4>My Page</h4></a>
-{{/if}}
+        <a href="/profile/{{{loggedUser.username}}}"> <img  class="iconsI" src="./../images/customer.svg" alt="" srcset="" width="40px" style=""> <h4>My Page</h4></a>
 
         <a href="/apps/all"> <img  class="iconsI" src="./../images/home.svg" alt="" srcset="" width="40px" style=""> <h4>Home</h4></a>
-        <a href="./../logout" class="menuitem"><img   src="./../images/log-out.svg" alt="" srcset="" width="40px" style=""> <h4>SignOut </h4></a>
 
-        <a id="share" onclick="openShare()" > <img  class="iconsI" src="./../images/share (1).svg" alt="" srcset="" width="40px" style=""> <h4>Share</h4></a>
+        <a id="share" > <img  class="iconsI" src="./../images/share (1).svg" alt="" srcset="" width="40px" style=""> <h4>Share</h4></a>
     </div>
    
     <div class="body">
-                <div class="sharethis-inline-share-buttons" ></div>
-
         <div class="bodyMain">
       
 
@@ -100,8 +97,8 @@
               </div>
               <div class="profileMe">
                   {{#if loggedUser}}
-           <a href="/profile/{{{loggedUser.username}}}" style="text-decoration: none;">     <h4 style="color: aqua;">{{{loggedUser.username}}} </h4> </a>
-                               <img src="./../images/{{{loggedUser.profileimage}}}" alt="" srcset="" height="40px" width="40px" style="border-radius: 100%;">
+           <a href="/profile/{{{loggedUser.username}}}">     <h4>{{{loggedUser.username}}} </h4> </a>
+                               <img src="./../images/{{{loggedUser.profileimage}}}" alt="" srcset="" width="40px">
 
                  {{else}}
                 <h4>Guest</h4>
@@ -110,58 +107,50 @@
                 {{/if}}
               </div>
             </div>
-   <div class="intro"><b>Business Presentations </b></div>
-   {{#each appscat }}
-   {{#if this}}
+<div class="intro">Orders</div>
 
-    <div class="bidcat">
-        {{#if appscat.subtitle}}
-   <div class="subHead"><h3>{{subtitle}}</h3></div> 
+<div class="cartOrders" style="margin: 0%; padding: 0%;">
 
-        {{else}}
-   <div class="subHead"><h3>{{@key}}</h3></div> 
-   {{/if}}
-   
-   <div class="category" >
-               {{#each this}}
-                <div class="specificApp">
-                    <div class="details">
-                        <img src="./../images/{{{BRANDICON}}}" alt="" srcset="" class="imgIconCompany" height="40px">
-                        <div class="headingIcon"><h3>{{{BUSINESSNAME}}}</h3></div>
-                    </div>
+    <table class="ordertable" style="padding: 4%; width: 100%;" >
+        <thead class="thead" >
+            
+                <td class="tablecell">
+                    ORDER ID
+                </td>
+                <td class="tablecell">
+                    USERNAME
+                </td>
+                <td class="tablecell">
+                    SERVICE ID
+                </td>
+                <td class="tablecell">
+                    HANDLEORDER
+                </td>
 
-                    <div class="aLink">
-                    <a href="/app/{{{BUSINESSNAME}}}">  
-                       <img src="./../images/view.svg" alt="" srcset=""> <h3>View</h3>
-                    </a> </div>
-                    <img class="appbrandimg" src="./../images/{{{BRANDICON}}}" alt="" srcset="">
-                    <div class="decApp">
-                        <h4 class="shortDescTitle">{{{SHORTTOPIC}}}</h4>
-                        <p>{{{SHORTINTRO}}}</p>
-                    </div>
-                    <div class="likes">
-                        <div class="views">
-                            <div class="view"><img src="./../images/view.svg" alt="" srcset=""  ></div>
-                            <h5>{{{views}}} views</h5>
-                        </div>
-
-                        <div class="views">
-                           <div class="like"><img  id="like{{{ID}}}" src="./../images/like.svg" alt="" srcset="" onclick="handleLike( {{{ID}}}, '{{{BUSINESSNAME}}}', '{{{BRANDICON}}}')"></div> 
-                            <h5>{{{likes}}} likes</h5>
-                        </div>
-                    </div>
-                </div>
-{{/each}}
-         
-
-  
-            </div>
-
-         
-
-        </div>
-           {{/if}}
-    {{/each}}
+          
+        </thead>
+        <tbody class="tablebody">
+            {{#if orders}}
+{{#each orders}}
+            <tr class="tablerow" id="btncheck{{{ID}}}">
+                <td class="tablecell">
+                    {{{ID}}} 
+                </td>
+                <td class="tablecell">
+                   <a href="/profile/{{{USERNAME}}}" style="text-decoration: none; color: rgb(78, 76, 76);"> {{{USERNAME}}} </a>
+                </td>
+                <td class="tablecell">
+                    <a href="/profile/{{{SERVICEID}}}" style="text-decoration: none; color: rgb(78, 76, 76);">  {{{SERVICEID}}}</a>
+                </td>
+                <td class="tablecell">
+                    <button  onclick="handlecheckout({{{ID}}}, {{{BUSINESSAPPID}}}, '{{{USERNAME}}}', {{{SERVICEID}}})" style="background-color: green; border-radius: 3%; border: 2px solid green; color: white; padding: 1%;"> <img src="./../images/shopping-cart.svg" alt="" srcset="" style="width: 24px;"> <span style="padding: 4%;">Checkout</span></button>
+                </td>
+            </tr>
+            {{/each}}
+            {{/if}}
+        </tbody>
+    </table>
+</div>
 
         </div>
 

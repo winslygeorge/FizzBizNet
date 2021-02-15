@@ -61,7 +61,7 @@ db.run( userCredidentials).then(function(feedback){
 
         }
 
-        res.render('serviceApp/index')
+        res.redirect('/apps/all')
 
        }else{
 

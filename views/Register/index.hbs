@@ -31,7 +31,12 @@
             
         </div>
         <div class="profileIcon" style="order: 3; padding: 2%;">
-            <img src="./../images/user.svg" class="menuIcon" style="width: 40px;"/>
+            {{#if loggedUser}}
+          <a href="/profile/{{{loggedUser.username}}}"> <img  class="loggeduserIcon" src="./../images/{{{loggedUser.profileimage}}}" class="menuIcon" style="width: 40px;"/></a> 
+
+            {{else}}
+           <a href="/login"> <img src="./../images/user.svg" class="menuIcon" style="width: 40px;"/></a>
+            {{/if}}
         </div>
     </div>
                 
@@ -40,11 +45,16 @@
             <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;"/>
             
         </div>
-        <a href="./../profile" class="menuitem"> <img   src="./../images/home.svg" alt="" srcset="" width="30px" style=""> <h4>Home</h4></a>
-        <a  class="menuitem" id="showToolbar" href="./../homezapps"> <img   src="./../images/customer.svg" alt="" srcset="" width="30px" style=""> <h4> Product&Services</h4></a>
-        <a href="./../home" class="menuitem"> <img   src="./../images/team.svg" alt="" srcset="" width="30px" style=""> <h4>About</h4></a>
-        <a href="./../Register" class="menuitem"> <img    src="./../images/add (1).svg" alt="" srcset="" width="30px" style=""> <h4> Register</h4></a>
-        <a href="./../login" class="menuitem"> <img   src="./../images/log-in.svg" alt="" srcset="" width="30px" style=""> <h4> SignIn </h4></a>
+       
+        <a href="/" class="menuitem"> <img   src="./../images/home.svg" alt="" srcset="" width="30px" style=""> <h4>Home</h4></a>
+       
+        <a  class="menuitem" id="showToolbar" href="/apps/all"> <img   src="./../images/customer.svg" alt="" srcset="" width="30px" style=""> <h4> Product&Services</h4></a>
+        <a href="/#howItWork" class="menuitem"> <img   src="./../images/team.svg" alt="" srcset="" width="30px" style=""> <h4>About</h4></a>
+        {{#if loggedUser}}
+        <a href="/profile/{{{loggedUser.username}}}" class="menuitem"> <img    src="./../images/user.svg" alt="" srcset="" width="30px" style=""> <h4> My Profile</h4></a>
+        {{else}}
+        <a href="/login" class="menuitem"> <img   src="./../images/log-in.svg" alt="" srcset="" width="30px" style=""> <h4> SignIn </h4></a>
+        {{/if}}
         <a href="./../logout" class="menuitem"><img   src="./../images/log-out.svg" alt="" srcset="" width="30px" style=""> <h4>SignOut </h4></a>
         </div>
 
@@ -53,28 +63,28 @@
        
     </header>
     
-    <mcenu type="toolbar" class="toolbarList">
+    <menu type="toolbar" class="toolbarList">
 
        
         <div class="toolbar-sub-1" id="searchbar">
             <input type="search" name="searchForService" id="">
         </div>
             <div class="toolbar-sub-1" id="wholesalemenu">WholeSales/Retails <div class="sub-wholesale-menu">
-                <a href="http://" >Online Stores</a>
-                <a href="http://" >Shopping Centers</a>
+                <a href="/apps/101" >Online Stores</a>
+                <a href="/apps/102" >Shopping Centers</a>
             </div></div>
             <div class="toolbar-sub-1" id="lifestylemenu">Life Style
                 <div class="sub-lifestyle-menu">
-                    <a href="http://" >Photography</a>
-                   <a href="http://"  >Hotel/Lounge</a>
-                   <a href="http://" >Bars/Liquor Stores</a>
+                    <a href="/apps/201" >Photography</a>
+                   <a href="/apps/202"  >Hotel/Lounge</a>
+                   <a href="/apps/203" >Bars/Liquor Stores</a>
                     <div id="beautymenu" >Beauty
                         <div class="sub-beauty-menu">
-                            <a href="http://" >MakeUp Artist</a>
-                           <a href="http://" >Saloon/Kinyozi</a>
-                            <a href="http://" >Accessories</a>
+                            <a href="/apps/301" >MakeUp Artist</a>
+                           <a href="/apps/302" >Saloon/Kinyozi</a>
+                            <a href="/apps/303" >Accessories</a>
                            
-                                <a href="http://">Clothlines/Shoes</a>
+                                <a href="/apps/304">Clothlines/Shoes</a>
                             
                         </div>
                     </div>
@@ -82,34 +92,34 @@
             </div>
             <div class="toolbar-sub-1" id="technologymenu">Technology
                 <div class="sub-technology-menu">
-                  <a href="http://">Tech Stores</a>
-                   <a href="http://">Web Development</a>
-                   <a href="http://">Logo Design</a>
-                  <a href="http://">Graphic Design</a>
-                  <a href="http://">App Development</a>
-                   <a href="http://">Game Development</a>
-                    <a href="http://">Video Editing</a>
+                  <a href="/apps/401">Tech Stores</a>
+                   <a href="/apps/402">Web Development</a>
+                   <a href="/apps/403">Logo Design</a>
+                  <a href="/apps/404">Graphic Design</a>
+                  <a href="/apps/405">App Development</a>
+                   <a href="/apps/406">Game Development</a>
+                    <a href="/apps/407">Video Editing</a>
                 </div>
             </div>
             <div class="toolbar-sub-1" id="educationmenu">Education
                 <div class="sub-education-menu">
-                    <a href="http://">Schools</a>
-                    <a href="http://">Tuitors</a>
+                    <a href="/apps/501">Schools</a>
+                    <a href="/apps/502">Tuitors</a>
                 </div>
             </div>
             <div class="toolbar-sub-1" id="consultantmenu">Consult/advisor
                 <div class="sub-consultant-menu">
-                    <a href="http://">Health</a>
-                    <a href="http://">Imformation Technology(IT)</a>
-                    <a href="http://">Law</a>
-                    <a href="http://">Engineering</a>
-                   <a href="http://">Architect&Design</a>
-                    <a href="http://">Others</a>
+                    <a href="/apps/601">Health</a>
+                    <a href="/apps/602">Imformation Technology(IT)</a>
+                    <a href="/apps/603">Law</a>
+                    <a href="/apps/604">Engineering</a>
+                   <a href="/apps/605">Architect&Design</a>
+                    <a href="/apps/606">Others</a>
                 </div>
            
             
         </div>
-    </mcenu>
+    </menu>
 
     <div class="body">
 
@@ -133,12 +143,12 @@
      </div>
        <section>
         <div class="inp">
-            <img src="./../images/businessgazzete.png.jpg" alt="" srcset="" ><br><br>
+            <img src="./../images/businessgazzete.png.jpg" alt="" srcset="" id="disIcon"><br><br>
         <label for="companyIcon">Profile Image <span class="starErr">*</span></label>
 
         <br><br>
          <p style="color: red;">{{profileError}}</p>
-        <input type="file" name="profileImage" id="iconInput" class="inputText" required="true" >
+        <input type="file" name="profileImage" id="iconInput" class="inputText" required="true"  >
         <br><br>
     </div>
 
@@ -234,14 +244,14 @@
 <div class="contactInfo">
 
     <div class="inp">
-        <p style="color: red;">{{wokrTelErr}}</p>
+        <p style="color: red;">{{mobileErr}}</p>
         <label for="companyCountry">Home Telephone Number <span class="starErr">*</span></label>
-        <input type="tel" name="telno" id="" class="input"  required="true" value="{{wokyTel}}" >
+        <input type="tel" name="telno" id="" class="input"  required="true" value="{{mobyTel}}" >
     </div>
     <div class="inp">
-        <p style="color: red;">{{mobileErr}}</p>
+        <p style="color: red;">{{wokrTelErr}}</p>
         <label for="companyCountry">Work Telephone Number</label>
-        <input type="tel" name="worktelno" id="" class="input" value="{{mobyTel}}" >
+        <input type="tel" name="worktelno" id="" class="input" value="{{wokyTel}}" >
     </div>
 </div>
 
@@ -278,6 +288,10 @@
                 <label for="companyCountry">Youtube Channel Link</label>
                 <input type="url" name="youtubelink" id="" class="input">
             </div>
+
+            <div class="regQuiz">
+    <p style="color: grey;">If you already have an account with us please <a href="/login"> click here </a>to login</p>
+</div>
         </div>
         <div class="next" id="reset">
             <input type="reset" value="Reset" class="btnNext">
@@ -301,6 +315,23 @@
                 </tr>
             </table></footer>
     </div>
-    
+    <script>
+
+        document.getElementById('iconInput').addEventListener('change',  handleFileChange, false)
+
+        function handleFileChange(e){
+
+
+var imgElement = document.getElementById('disIcon')
+
+
+
+    if(!e.target.files.length) return imgElement.src='';
+
+
+    return imgElement.src= URL.createObjectURL(e.target.files.item(0));
+
+}
+    </script>
     </body>
     </html>
