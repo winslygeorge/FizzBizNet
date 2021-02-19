@@ -502,3 +502,13 @@ overflow: hidden;
     color: aqua;
     margin: 4%;
 }
+
+.editBtn{
+
+    background-color: white;
+    padding: 2%;
+
+    color: blue;
+    border: 2px solid white;
+    border-radius: 4px;
+}

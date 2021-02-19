@@ -75,7 +75,10 @@ app.use('/', loginRoute)
 
 app.use('/', require('./views/logout'))
 
-app.use('/', require('./views/Routes/AddService'))
+    app.use('/', require('./views/Routes/AddService'))
+    
+    app.use('/', require('./views/Routes/serviceupdate'))
+    app.use('/', require('./views/Routes/deletappscomp'))
 
 app.get('/home', isAuth, (req, res )=>{
    

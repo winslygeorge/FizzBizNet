@@ -34,7 +34,7 @@
         </div>
         <div class="profileIcon" style="order: 3; padding: 2%;">
             {{#if loggedUser}}
-          <a href="/profile/{{{loggedUser.username}}}"> <img src="./../images/{{{loggedUser.profileimage}}}" class="menuIcon" style="width: 40px;"/></a> 
+          <a  href="/profile/{{{loggedUser.username}}}"> <img src="./../images/{{{loggedUser.profileimage}}}" class="loggeduserIcon" style="width: 40px;"/></a> 
 
             {{else}}
           <a href="/login"> <img src="./../images/user.svg" class="menuIcon" style="width: 40px;"/></a> 
@@ -48,12 +48,36 @@
             <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;"/>
             
         </div>
-        <a href="./../profile" class="menuitem"> <img   src="./../images/home.svg" alt="" srcset="" width="30px" style=""> <h4>Home</h4></a>
-        <a  class="menuitem" id="showToolbar" href="./../homezapps"> <img   src="./../images/customer.svg" alt="" srcset="" width="30px" style=""> <h4> Product&Services</h4></a>
-        <a href="./../home" class="menuitem"> <img   src="./../images/team.svg" alt="" srcset="" width="30px" style=""> <h4>About</h4></a>
-        <a href="./../Register" class="menuitem"> <img    src="./../images/add (1).svg" alt="" srcset="" width="30px" style=""> <h4> Register</h4></a>
-        <a href="/login" class="menuitem"> <img   src="./../images/log-in.svg" alt="" srcset="" width="30px" style=""> <h4> SignIn </h4></a>
-        <a href="./../logout" class="menuitem"><img   src="./../images/log-out.svg" alt="" srcset="" width="30px" style=""> <h4>SignOut </h4></a>
+
+        <a href="/" class="menuitem"> <img src="./../images/home.svg" alt="" srcset="" width="30px" style="">
+            <h4>Home</h4>
+        </a>
+        
+        <a class="menuitem" id="showToolbar" href="/apps/all"> <img src="./../images/customer.svg" alt="" srcset="" width="30px"
+                style="">
+            <h4> Product&Services</h4>
+        </a>
+        <a href="/#howItWork" class="menuitem"> <img src="./../images/team.svg" alt="" srcset="" width="30px" style="">
+            <h4>About</h4>
+        </a>
+        {{#if loggedUser}}
+        <a href="/profile/{{{loggedUser.username}}}" class="menuitem"> <img src="./../images/user.svg" alt="" srcset=""
+                width="30px" style="">
+            <h4> My Profile</h4>
+        </a>
+        {{else}}
+        <a href="/Register" class="menuitem"> <img src="./../images/add (1).svg" alt="" srcset="" width="30px" style="">
+            <h4> Register</h4>
+        </a>
+        <a href="/login" class="menuitem"> <img src="./../images/log-in.svg" alt="" srcset="" width="30px" style="">
+            <h4> SignIn </h4>
+        </a>
+        {{/if}}
+        <a href="./../logout" class="menuitem"><img src="./../images/log-out.svg" alt="" srcset="" width="30px" style="">
+            <h4>SignOut </h4>
+        </a>
+
+      
         </div>
 
 
@@ -134,11 +158,80 @@
 
         <div class="sub-column-2"  id="companyIcon">
             <img src="./../images/{{{row.BRANDICON}}}" alt="" srcset="">
+            {{#if isowner}}
+            <br>
+            <button class="editBtn" onclick="handleEditIcon()">edit</button>
+            <div class="editIcon" style="position: absolute; width: 80%; background-color: black; padding: 4%; z-index: 2; opacity: 0.9; display: none;">
+                <p style="color: grey;"> Change Your Brand Icon Image</p>
+                <form action="/updateiconimage" method="POST" enctype="multipart/form-data" >
+                <input type="file" id="iconImgcng" name="profileImage" style="background-color: white;">
+                <input type="hidden" name="appname" value="{{{row.BUSINESSNAME}}}">
+                <input type="hidden" name="appid" value="{{{row.ID}}}">
+                <input type="submit" value="submit" style="width: fit-content; color: white; background-color: green; border: 2px solid green; border-radius: 4px; padding: 2%; margin: 2%; text-decoration: none;">
+                </form>
+            </div>
+            {{/if}}
         </div>
+
+        <div class="sub-column-2" id="quotes">
+        
+            <p>
+                <button disabled="disabled" style="background-color: white; padding:1%;  border : 2px solid white; border-radius: 4px;"> <img src="./../images/view.svg" alt="" srcset="" style="width: 10px;"> {{{row.views}}}
+                    views</button>
+                <button disabled="disabled" style="background-color: white; padding:1%;  border : 2px solid white; border-radius: 4px;"> <img src="./../images/like (1).svg" alt="" srcset="" style="width: 10px;"> {{{row.likes}}}
+                    likes</button>
+                <button disabled="disabled" style="background-color: white; padding:1%;  border : 2px solid white; border-radius: 4px;"> <img src="./../images/customer.svg" alt="" srcset="" style="width: 10px;"> {{{row.followers}}}
+                    followers</button>
+        
+        
+            </p>
+        </div>
+
+        {{#if isowner}}
+
+
+<div class="sub-column-2" id="quotes">
+    <h3 class="subTitle">Admin Handle</h3>
+    <p>
+       <a href="/businessorders/{{{row.ID}}}"> <button 
+            style="background-color: orange; color: white; padding:2%; border: 2px solid orange; border-radius:4px;">Pending
+            Orders</button> </a>
+      <a href="/businesscartorders/{{{row.ID}}}">  <button 
+            style="background-color: green; color : white; padding:2%; border: 2px solid green; border-radius :4px;">Cart
+            Orders</button></a>
+            <br>
+            <a href="/businessdeletecomponents/{{{row.ID}}}"> <button
+                    style="background-color: red; color : white; padding:2%; border: 2px solid red; border-radius :4px;">Remove Apps component</button></a>
+    </p>
+</div>
+
+{{else}}
+      
+
+<div class="sub-column-2" id="quotes">
+
+    <p>
+
+        <button 
+            style="background-color: white; padding:1%;  border : 2px solid white; border-radius: 4px;" onclick="handleLike( {{{row.ID}}}, '{{{row.BUSINESSNAME}}}', '{{{row.BRANDICON}}}')"> <img
+                src="./../images/like (1).svg" alt="" srcset="" style="width: 10px;"> + LIke</button>
+        <button onclick="handleFollow( {{{row.ID}}}, '{{{row.BUSINESSNAME}}}', '{{{row.BRANDICON}}}')"
+            style="background-color: white; padding:1%;  border : 2px solid white; border-radius: 4px;"> <img
+                src="./../images/customer.svg" alt="" srcset="" style="width: 10px;"> + Follow</button>
+
+
+    </p>
+</div>
+
+            {{/if}}
 
         <div  class="sub-column-2" id="mission">
         <h3 class="subTitle">Mission</h3>
-        <p>{{{row.MISSION}}}</p>
+        <p id="missionChanged">{{{row.MISSION}}}</p>
+        {{#if isowner}}
+        
+        <button class="editBtn" onclick="handleUpdatemission({{{row.ID}}})">edit</button>
+        {{/if}}
     </div>
 
       <div  class="sub-column-2" id="quotes">
@@ -146,6 +239,10 @@
             <p>
                {{{row.BUSINESSEMAIL}}}
             </p>
+            {{#if isowner}}
+            
+            <button class="editBtn" onclick="handleUpdateEmail({{{row.ID}}})">edit</button>
+            {{/if}}
         </div>
             <div  class="sub-column-2" id="team">
                     <h3 class="subTitle">Social Media</h3>
@@ -153,12 +250,15 @@
                     <br>
                     <table width="76%" border="0" align="center" valign="bottom" cellspacing="0" cellpadding="0">
                         <tr>
-                            {{#each social}}
+                           
 
                            
-                        <td><a href={{{BUSINESSSOCIALMEDIALINK}}}><img src="./../images/{{{SOCIALNAME}}}.svg" alt="" style="width: 20px;"></a></td>
-                          
-                          {{/each}}
+                        <td><a href={{{row.FACEBOOK}}}><img src="./../images/facebook.svg" alt="" style="width: 20px;"></a></td>
+                                                <td><a href={{{row.INSTAGRAM}}}><img src="./../images/instagram.svg" alt="" style="width: 20px;"></a></td>
+
+                                <td><a href={{{row.TWITTER}}}><img src="./../images/twitter.svg" alt="" style="width: 20px;"></a></td>
+                                    <td><a href={{{row.YOUTUBE}}}><img src="./../images/youtube.svg" alt="" style="width: 20px;"></a></td>
+
                           
                         </tr>
                     </table>
@@ -168,11 +268,41 @@
             <p>
                {{{row.SHORTINTRO}}}
             </p>
+            {{#if isowner}}
+            
+            <button class="editBtn" onclick="handleUpdateIntro({{{row.ID}}})">edit</button>
+            {{/if}}
         </div>
     </div>
-    <div  class="sub-column-1" id="serviceSection">
+    <div  class="sub-column-1" id="serviceSection" style="scroll-behavior: smooth; overflow:auto; max-height: 240vh;">
 
         <h2 class="subTitle">Serices/Products</h2>
+
+        <p>
+            {{#if isowner}}
+            <button style="background-color: green; border:2px solid green; padding:2%; border-radius:4px; color:white;"
+                onclick="handleAddService()">Add</button>
+
+                <div class="addServiceProduct"
+                    style="position: absolute; width: 400px;  margin:auto; background-color: black; padding: 4%; z-index: 2; opacity: 0.9; display: none;">
+                    <p style="color: grey;"> AddService</p>
+                    <form action="/updateaddservice" method="POST" enctype="multipart/form-data">
+                        <input type="file" id="iconImgcng" name="serviceIcon" style="background-color: white;" required><br><br>
+                        <label for="serviceName">Service Name</label> <br><br>
+                        <input type="text" name="serviceName" id="" required> <br><br>
+                        <label for="serviceName">Service Description</label> <br><br>
+                        <textarea name="serviceDesc" id="" cols="30" rows="10" required></textarea> <br><br>
+                        <label for="serviceName">Service price</label> <br><br>
+                        <input type="text" name="servicePrice" id="" required> <br><br>
+                        <input type="hidden" name="appname" value="{{{row.BUSINESSNAME}}}">
+                        <input type="hidden" name="appid" value="{{{row.ID}}}">
+                        <input type="submit" value="submit"
+                            style="width: fit-content; color: white; background-color: green; border: 2px solid green; border-radius: 4px; padding: 2%; margin: 2%; text-decoration: none;">
+                    </form>
+                </div>
+            
+            {{/if}}
+        </p>
 
         <div class="servicesCol">
             {{#each services}}
@@ -185,9 +315,14 @@
 <br>
 <p style="color: white;">
 <b>Ksh. {{{PRICE}}}  <button id = "addorder" onclick="handleorderbtn({{{ID}}});">+</button></b></p>
+
+</div>
+<div>
+
 </div>
 
 {{/each}}
+
 
 
         </div>
@@ -202,16 +337,47 @@
 
 <h3>Branch Location</h3>
 
+<p>
+    {{#if isowner}}
+    <button style="background-color: green; border:2px solid green;  padding:2%; border-radius:4px; color:white;"
+        onclick="handleAddLocation()">Add</button>
+
+                <div class="addLocation"
+                    style="position: absolute; width: 400px;  margin:auto; background-color: black; padding: 4%; z-index: 2; opacity: 0.9; display: none;">
+                    <p style="color: grey;"> Add Location</p>
+                    <form action="/updateaddlocation" method="POST" enctype="multipart/form-data">
+                        <label for="serviceName">Continent</label> <br><br>
+                        <input type="text" name="continent" id="" required> <br><br>
+                        <label for="serviceName">Country</label> <br><br>
+<input type="text" name="country" required> <br><br>
+                        <label for="serviceName">Town</label> <br><br>
+                        <input type="text" name="towncity" id="" required> <br><br>
+                        <label for="serviceName">Address</label> <br><br>
+                        <input type="text" name="address" id="" required > <br><br>
+                        <input type="hidden" name="appname" value="{{{row.BUSINESSNAME}}}">
+                        <input type="hidden" name="appid" value="{{{row.ID}}}">
+                        <input type="submit" value="submit"
+                            style="width: fit-content; color: white; background-color: green; border: 2px solid green; border-radius: 4px; padding: 2%; margin: 2%; text-decoration: none;">
+                    </form>
+                </div>
+
+    {{/if}}
+</p>
+
 {{#each location}}
 
            <div id="location"> {{{CONTINENT}}} {{{COUNTRY}}} {{{TOWNCITY}}} <br> {{{ADDRESS}}}</div>
-{{/each}}
+   {{/each}}
 
            <h3>
                Range
            </h3>
             <div id="range">
                 Within {{{row.RANGE}}}
+                {{#if isowner}}
+                <br>
+                <button class="editBtn" onclick="handleUpdateRange({{{row.ID}}})">edit</button>
+                {{/if}}
             </div>
            
 
@@ -304,13 +470,33 @@
     </div>
 </main>
 
-<div class="column1" id="gallery">
+<div class="column1" id="gallery" style="scroll-behavior: smooth; overflow:auto; max-height: 200vh;">
     <h2>Galllery</h2>
 
+<p>
+    {{#if isowner}}
+    <button style="background-color: green; border:2px solid green;  padding:2%; border-radius:4px; color:white;"
+        onclick="handleAddImage()">Add</button>
+        <div class="addImage"
+            style="position: absolute; width: 80%; background-color: black; padding: 4%; z-index: 2; opacity: 0.9; display: none;">
+            <p style="color: grey;"> Add Image</p>
+            <form action="/updateaddimage" method="POST" enctype="multipart/form-data">
+                <input type="file" id="iconImgcng" name="img" style="background-color: white;">
+                <input type="hidden" name="appname" value="{{{row.BUSINESSNAME}}}">
+                <input type="hidden" name="appid" value="{{{row.ID}}}">
+                <input type="submit" value="submit"
+                    style="width: fit-content; color: white; background-color: green; border: 2px solid green; border-radius: 4px; padding: 2%; margin: 2%; text-decoration: none;">
+            </form>
+        </div>
+
+    {{/if}}
+</p>
     <div  id="gallerycarosol">
 
 {{#each images}}
-        <img src="./../images/{{{IMAGELINK}}}" class="imagesIng" alt="" srcset="" id="img1">
+      <a href="./../images/{{{IMAGELINK}}}">  <img src="./../images/{{{IMAGELINK}}}" class="imagesIng" alt="" srcset="" id="img1"></a>
+        <br>
+      
       {{/each}}
        
         <button id="imgBack">
@@ -323,12 +509,35 @@
     </div>
 
 </div>
-<div class="column1" id="reel">
+<div class="column1" id="reel" style="scroll-behavior: smooth; overflow:auto; max-height: 200vh;">
 <h2>Reel</h2>
+<p>
+    {{#if isowner}}
+    <button style="background-color: green; border:2px solid green;  padding:2%; border-radius:4px; color:white;"
+        onclick="handleAddVideo()">Add</button>
+       
+            <div class="addVideo"
+                style="position: absolute; width: 400px;  margin:auto; background-color: black; padding: 4%; z-index: 2; opacity: 0.9; display: none;">
+                <p style="color: grey;"> Add Youtube video link</p>
+                <form action="/updateaddvideo" method="POST" enctype="multipart/form-data">
+                    <label for="serviceName">Youtube link</label> <br><br>
+                    <input type="text" name="youtubeVideo" id="" required> <br><br>
+                                  
+                    <input type="hidden" name="appname" value="{{{row.BUSINESSNAME}}}">
+                    <input type="hidden" name="appid" value="{{{row.ID}}}">
+                    <input type="submit" value="submit"
+                        style="width: fit-content; color: white; background-color: green; border: 2px solid green; border-radius: 4px; padding: 2%; margin: 2%; text-decoration: none;">
+                </form>
+            </div>
+
+    {{/if}}
+</p>
 <div class="videos">
 {{#each videos}}
-    <iframe width="420" height="345" src="{{{BUSINESSVIDEOLINK}}}?controls=1" class="video">
+    <iframe width="420" height="345" src="https://www.youtube.com/embed/{{{BUSINESSVIDEOLINK}}}" class="video">
+        
     </iframe>
+   
 {{/each}}
     </div>
 </div>
@@ -371,7 +580,7 @@
       
     
         <div class="next" id="submit">
-            <input type="button" value="Submit" class="btnNext" onclick="handleEmailBtn('{{{row.BUSINESSEMAIL}}}', '{{{loggedUser.email}}}', '{{{loggedUser.username}}}', '{{{loggedUser.profileimage}}}')">
+            <input type="button" value="Submit" class="btnNext" onclick="handleEmailBtn('{{{row.BUSINESSEMAIL}}}', '{{{loggedUser.email}}}', '{{{loggedUser.username}}}', '{{{row.BUSINESSNAME}}}', {{{row.ID}}})">
         </div>
         </div>
     </div>

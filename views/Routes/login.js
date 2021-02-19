@@ -42,33 +42,37 @@ if(req.query.userName.indexOf('@') != -1){
 
 db.run( userCredidentials).then(function(feedback){
 
-    if(feedback.code == 200 ){
+    if (feedback.code == 200) {
+        
+        if (feedback.result.rows.length == 0) {
 
-        let passd = feedback.result.rows[0].PASSWORD
-
-
-       if (bycrypt.compareSync(req.query.passwd, passd)){
-
-
-
-        req.session.isAuth  =  true
-
-        req.session.userDetails  =  {
-
-            username : feedback.result.rows[0].USERNAME,
-            email : feedback.result.rows[0].EMAIL,
-            profileimage : feedback.result.rows[0].PROFILEIMAGE
-
-        }
-
-        res.redirect('/apps/all')
-
-       }else{
+            res.redirect('/login')
+            
+        }else{
 
 
-        res.redirect('/login')
+             let passd = feedback.result.rows[0].PASSWORD
+
+
+       if (bycrypt.compareSync(req.query.passwd, passd)) {
+         req.session.isAuth = true;
+
+         req.session.userDetails = {
+           username: feedback.result.rows[0].USERNAME,
+           email: feedback.result.rows[0].EMAIL,
+           profileimage: feedback.result.rows[0].PROFILEIMAGE,
+         };
+
+         res.redirect("/apps/all");
+       } else {
+         res.redirect("/login");
        }
       
+        }
+
+       
+
+     
     }else{
 
         console.log(feedback.code)

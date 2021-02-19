@@ -19,8 +19,17 @@ const db = require('../databasemanagementMYSQL/DBManager')
 const DBcon = new db()
 
 const handleDbReq = require('./../../oracleDBManager/dbmanager')
+const dbconnect = require('../../oracleDBManager/dbconnect')
 
 const serveRequest = new handleDbReq()
+
+
+const genEmail =  require('./../../email/genSendEmail')
+const optionGen =  require('./../../email/emailoptionsgenerator')
+const options =  new optionGen()
+
+
+const gen = new  genEmail()
 
 route.post('/add/user',   (req, res)=>{
 
@@ -254,6 +263,7 @@ var profileIg = uname+'_'+Date.now()+'_'+Math.round(Math.random()* 1E9)+'.'+prof
     github : github,
     instagram : instagram,
     workTel : wokTel,
+    isverified : 0,
         tablename: "USERS",
         operation : "insert"
 
@@ -283,7 +293,71 @@ var profileIg = uname+'_'+Date.now()+'_'+Math.round(Math.random()* 1E9)+'.'+prof
             })
             console.log(feedback.result)
 
-            res.redirect('/login')
+            var code = Math.round(Math.random()* 10000)
+
+            var insertVerification  =  {
+                tablename : 'verificationcode',
+                operation : 'insert',
+                username : inputs.username,
+                code : code
+            }
+
+            serveRequest.run(insertVerification).then(function(results){
+
+                if(results.code  == 200 ){
+
+
+                    var email = {
+                        from: `Fizzbiznet  <omondiwinsly2@gmail.com>`,
+                        to: inputs.email,
+                        subject: "Verify Your Email",
+                        template: 'verify',
+                        context: {
+                            name: inputs.username,
+                            url: 'YOUR URL',
+                            title : 'Verify Email',
+                            code : code,
+                         
+                    
+                        },
+                    
+                        attachments: [{
+                            filename: 'FizzBizNet.png',
+                            path: path.join(__dirname, './../../email/views/images/FizzBizNet.png'),
+                            cid: 'logoimg' //same cid value as in the html img src
+                        },
+                        {
+                            filename: inputs.profileImage,
+                            path: path.join(__dirname, './../images/'+inputs.profileImage),
+                            cid: 'profileicon' //same cid value as in the html img src
+                        }]
+                    }
+                    
+                    gen.sendMail(options.generateEmailOpt(email.from,email.to, email.subject, email.template, email.context, email.attachments)).then(function(result){
+        
+                        console.log(result)
+
+                    res.redirect('/emailverification')
+                    }, function(error){
+        
+                        console.log(error)
+            
+                        res.send({code : 101, error : "error"})
+                    })
+                    
+        
+        
+                }else{
+
+                    res.redirect('/emailverification')
+
+
+                }
+
+            })
+
+
+           
         }else{
 
             res.render('Register/index', {error : "Username or Email already Exists",profileError: profileImgErr,fnErr: fnameErr, lnErr: lnameErr, unErr: unameErr, emErr: emailErr, contErr: continentErr, passErr: passwdErr, wokrTelErr: wokTelErr, mobileErr: mobTelErr, firstName: fname, lastName: lname, userName: uname, email: email, confimEmail: confirmEmail, country: country, continent: continent, townCity: town, address: newUser.address, wokyTel: wokTel, mobyTel: mobTel , profileImage: profileImg})
@@ -308,6 +382,94 @@ res.render('Register/index', {profileError: profileImgErr,fnErr: fnameErr, lnErr
 })
 
 
+route.post('/verifyemail', (req, res)=>{
+
+var codeVer = {
+
+    code : parseInt(clean.CleanData(req.body.code)),
+    username : clean.CleanData(req.body.username)
+}
+
+if(codeVer.code != null && codeVer.code != undefined && codeVer.username != null && codeVer.username != undefined){
+
+
+    var selectUser = {
+
+        operation : 'select',
+        tablename : 'verificationcode',
+        fields : [],
+        wfield : ['username'],
+        wvalue : [codeVer.username]
+    }
+
+    serveRequest.run(selectUser).then(function(results){
+
+        if(results.code == 200){
+
+            var storedcode = results.result.rows[0].CODE
+
+            if(storedcode == codeVer.code){
+
+              var updatever = {
+
+                operation : 'update',
+                tablename : 'users',
+                isverified : 1,
+                where : 'username',
+                val : codeVer.username
+              }
+
+              serveRequest.run(updatever).then(function(results){
+
+                if(results.code == 200){
+
+
+                    var deleteever = {
+
+                        operation : 'update',
+                        tablename : 'users',
+                        isverified : 1,
+                        where : 'username',
+                        val : codeVer.username
+                      }
+
+                      serveRequest.run(deleteever).then(function(results){
+
+                        res.redirect('/login')
+
+                      })
+
+
+                }else{
+
+                    res.render('verifyemail/index', {codeerr : "Wrong code could not verify...try again"})
+
+                }
+              })
+
+
+            }else{
+
+                res.render('verifyemail/index', {codeerr : "Wrong code ... could not verify...try again"})
+
+            }
+
+        }else{
+
+            res.render('verifyemail/index', {codeerr : "User does not exist..."})
+
+
+        }
+    })
+
+}else{
+
+  res.render('verifyemail/index', {codeerr : "Fields empty"})
+}
+    
+
+
+})
 
 
 
