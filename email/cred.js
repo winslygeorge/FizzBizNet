@@ -1,12 +1,12 @@
 const {google} = require('googleapis')
 
-const CLIENTID = '747677922727-spr9g23frru2lsh8jkgkom88gbgbiqa5.apps.googleusercontent.com'
+const CLIENTID = '495780731430-ohsteuvh7emdvsepbd5kal1f7pmg0obt.apps.googleusercontent.com'
 
-const REFRESHTOKEN = '1//048d5QMKKAKUbCgYIARAAGAQSNwF-L9Irp-Sbi_GK-jjCryoXNUsNUS1iox4mbodOaSkx_g9My8psbgAUHJSLr5uNr1J28RN4j6I'
+const REFRESHTOKEN = '1//04ms2eRjUFi6-CgYIARAAGAQSNwF-L9IrmrlKAqZZW0WTKGVVj9EaI-SU6ZoBojPPlMt7FLLuOvB1D35ayxyhyfl0prCK6IMsTwE'
 
 const REDIRECTURI = 'https://developers.google.com/oauthplayground'
 
-const CLIENTSECRETE =   'fQaaPpfsoV8RE0lXr-6YUGUs'
+const CLIENTSECRETE =   'WiL-xule_mfe-ePRwWpTZXsW'
 
 const auth2client = new google.auth.OAuth2(CLIENTID, CLIENTSECRETE, REDIRECTURI)
 

@@ -82,7 +82,14 @@ $('#addS').on('click', function(){
 
     counterService++;
 
-    var sectionDiv = '  <form action="/saddservice" method="post" enctype="multipart/form-data"> <section class="classSection" id="section'+counterService+'"><div class="inp"><img src="./../images/businessgazzete.png.jpg" alt="" srcset="" id= "dis" ><br><br><label for="companyIcon">Service Image</label> <br><br> <input type="file" name="serviceIcon" id="serviceIcon" class="inputText" required><br><br></div><div class="inp"><label for="companyName">Service Name</label><br><br><input type="text" name="serviceName" id="serviceName" class="inputText" required></div><div class="inp"><label for="companyName">Service Description</label><br><br><input type="text" name="serviceDesc" id="" class="inputText" required></div><div class="inp"><label for="companyName">Service Price</label><br><br><input type="number" name="servicePrice" id="" class="inputText" required></div> <div   class = "removeSer"  id="remove'+counterService+'" onclick="removeService('+counterService+');"><a  >Remove Service</a></div>  <div class="next" id="submit"><input type="submit" value="submit" class="btnNext"></div></section></form>';
+    var sectionDiv =
+      '  <form action="/saddservice" method="post" enctype="multipart/form-data"> <section class="classSection" id="section' +
+      counterService +
+      '"><div class="inp"><img src="./../images/businessgazzete.png.jpg" alt="" srcset="" id= "dis" ><br><br><label for="companyIcon">Service Image</label> <br><br> <input type="file" name="serviceIcon" id="serviceIcon" class="inputText" required><br><br></div><div class="inp"><label for="companyName">Service Name</label><br><br><input type="text" name="serviceName" id="serviceName" class="inputText" required></div><div class="inp"><label for="companyName">Service Description</label><br><br><input type="text" name="serviceDesc" id="" class="inputText" required></div><div class="inp"><label for="companyName">Service Price <br> Enter currency code of your country then the price</label><br><br><input type="text" name="servicePrice" id="" class="inputText" placeholder="Ksh. 0.00"></div> <div   class = "removeSer"  id="remove' +
+      counterService +
+      '" onclick="removeService(' +
+      counterService +
+      ');"><a  >Remove Service</a></div>  <div class="next" id="submit"><input type="submit" value="submit" class="btnNext"></div></section></form>';
 
    console.log(sectionDiv);
     $('.section').append(sectionDiv);
@@ -229,4 +236,45 @@ function handleVideoChange(cnt){
     }
 
 
+}
+
+
+function handleRecoverPassword() {
+    
+    alert("Are you sure this is your account")
+
+    var recoveryemail = prompt("Enter your account's Email.\n You will receive a password change link email in your email after some few minutes...", '')
+
+    if (recoveryemail != null && recoveryemail != undefined && recoveryemail != '') {
+
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var result = JSON.parse(this.responseText)
+
+                if (result.code == 200) {
+
+                    alert('Recovery Email sent...')
+
+                } else if (result.code == 400) { 
+
+
+                    alert("No account is registered with the provided account.")
+
+                }else{
+
+
+                    alert("Error Requesting password change... please try again...")
+                }
+            }
+        };
+        xhttp.open("POST", "/emailpasswordchangerequest", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("email=" + recoveryemail);
+        
+    } else {
+        alert("No email was received...")
+    }
 }

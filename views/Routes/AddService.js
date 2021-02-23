@@ -241,7 +241,7 @@ route.post("/addService", (req, res) => {
               dbcon.run(insertOwner).then(function (results) {
                 if (results.code == 200) {
                   var email = {
-                    from: `Fizzbiznet  <omondiwinsly2@gmail.com>`,
+                    from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
                     to: req.session.userDetails.email,
                     subject: "Your Business App was created",
                     template: "appcreated",
@@ -372,7 +372,7 @@ route.post("/saddservice", isbizSet, (req, res) => {
         serviceicon: serviceIcon,
 
         servicedesc: clean.CleanData(fields.serviceDesc),
-        price: parseFloat(fields.servicePrice),
+        price: fields.servicePrice,
 
         businessid: req.session.appid,
         tablename: "services",
@@ -1034,7 +1034,7 @@ route.post("/postemail", isAuth, (req, res) => {
                 console.log(getEmail);
 
                 var email = {
-                  from: `Fizzbiznet  <omondiwinsly2@gmail.com>`,
+                  from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
                   to: getEmail,
                   subject: newemail.topic,
                   template: "comment",
@@ -1091,7 +1091,7 @@ route.post("/postemail", isAuth, (req, res) => {
               });
             } else {
               var email = {
-                from: `Fizzbiznet  <omondiwinsly2@gmail.com>`,
+                from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
                 to: newemail.appemail,
                 subject: newemail.topic,
                 template: "comment",
@@ -1143,7 +1143,7 @@ route.post("/postemail", isAuth, (req, res) => {
           });
         } else {
           var email = {
-            from: `Fizzbiznet  <omondiwinsly2@gmail.com>`,
+            from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
             to: newemail.appemail,
             subject: newemail.topic,
             template: "comment",
@@ -1194,7 +1194,7 @@ route.post("/postemail", isAuth, (req, res) => {
         }
       } else {
         var email = {
-          from: `Fizzbiznet  <omondiwinsly2@gmail.com>`,
+          from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
           to: newemail.appemail,
           subject: newemail.topic,
           template: "comment",
@@ -1405,15 +1405,16 @@ route.post("/handleorder", isAuth, (req, res) => {
                   res.send({ code: 101, result: "Empty Field" });
                 } else {
                   var email = {
-                    from: `${newemail.appname}  <omondiwinsly2@gmail.com>`,
+                    from: `${newemail.appname}  <fizzbiznet@gmail.com>`,
                     to: newemail.useremail,
                     subject: newemail.topic,
                     template: "orderemail",
                     context: {
-                      name: newemail.username,
-                      url: "YOUR URL",
+                      username: newemail.username,
+                      appname: newemail.appname,
+                    servicename : servicename,
                       title: "Order Details Email",
-                      timedate: orderdetails.datetimeorder,
+                      datetime: orderdetails.datetimeorder,
                       venue: orderdetails.venue,
                     },
 

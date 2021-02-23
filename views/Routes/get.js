@@ -1,5 +1,6 @@
 const { parse } = require("cookie");
 const express = require("express");
+const clean = require("../databasemanagementMYSQL/clean");
 const route = express.Router();
 
 const db = require("./../../oracleDBManager/dbmanager");
@@ -31,6 +32,65 @@ const isAuth = (req, res, next) => {
     next();
   } else {
     res.redirect("/login");
+  }
+};
+
+const isAdmin = (req, res, next) => {
+
+
+  if (req.session.isAuth) {
+
+    var appid = req.params.id
+
+    console.log(appid)
+    var selectOwner = {
+
+      operation: 'select',
+      tablename: 'ownerbusiness',
+      fields: [],
+      wfield: ['username', 'businessappid'],
+      wvalue: [req.session.userDetails.username, parseInt(appid)]
+    }
+
+    dbcon.run(selectOwner).then(function (results) {
+      
+      if (results.result.rows.length > 0) {
+        
+        next();
+      } else {
+        
+        res.redirect("/apps/all");
+      }
+    })
+
+
+   
+  } else {
+    res.redirect("/apps/all");
+  }
+};
+
+const isMyprofile = (req, res, next) => {
+
+
+  if (req.session.isAuth) {
+
+    var appid = req.params.id
+
+   if(req.session.userDetails.username.match(appid)){
+
+     next();
+   } else {
+     
+     res.redirect("/apps/all");
+
+     
+   }
+   
+
+
+  } else {
+    res.redirect("/apps/all");
   }
 };
 
@@ -139,7 +199,7 @@ route.get("/profile/:id", isAuth, (req, res) => {
   );
 });
 
-route.get('/businessdeletecomponents/:id', isAuth, (req, res) => {
+route.get('/businessdeletecomponents/:id', isAdmin, (req, res) => {
   
   var appid = req.params.id, services = null, locations = null, images = null, video = null, app = null
 
@@ -1080,7 +1140,7 @@ route.get("/apps/:id", (req, res) => {
   }
 });
 
-route.get("/usersorders/:id", isAuth, (req, res) => {
+route.get("/usersorders/:id", isMyprofile, (req, res) => {
   var username = req.params.id;
 
   if (username.match(req.session.userDetails.username)) {
@@ -1142,8 +1202,12 @@ route.get("/usersorders/:id", isAuth, (req, res) => {
   }
 });
 
-route.get("/businessorders/:id", (req, res) => {
+route.get("/businessorders/:id", isAdmin, (req, res) => {
   var businessappid = req.params.id;
+
+  var businessname = req.query.appname;
+
+  console.log(businessname)
 
   var selectcheckedorders = {
     operation: "select",
@@ -1162,9 +1226,16 @@ route.get("/businessorders/:id", (req, res) => {
       if (results.code == 200) {
         var checkedorders = results.result.rows;
 
+      checkedorders.forEach(element => {
+
+        element.appname = businessname
+         
+       });
+
         res.render("businessorders/index", {
           loggedUser: req.session.userDetails,
           orders: checkedorders,
+         
         });
       } else {
         console.log(results.result);
@@ -1179,8 +1250,10 @@ route.get("/businessorders/:id", (req, res) => {
   }
 });
 
-route.get("/businesscartorders/:id", (req, res) => {
+route.get("/businesscartorders/:id", isAdmin,(req, res) => {
   var businessappid = req.params.id;
+
+  var businessname = req.query.appname;
 
   var selectcartorders = {
     operation: "select",
@@ -1199,9 +1272,16 @@ route.get("/businesscartorders/:id", (req, res) => {
       if (results.code == 200) {
         var checkedorders = results.result.rows;
 
+        checkedorders.forEach(element => {
+
+          element.appname = businessname
+
+        });
+
         res.render("businesscartorder/index", {
           loggedUser: req.session.userDetails,
           orders: checkedorders,
+         
         });
       } else {
         console.log(results.result);
@@ -1219,4 +1299,24 @@ route.get("/businesscartorders/:id", (req, res) => {
 route.get("/emailverification", (req, res) => {
   res.render("verifyemail/index");
 });
+
+route.get("/emailchangepass/:id", (req, res) => {
+  var requesterEmail = clean.CleanData(req.params.id)
+  if (requesterEmail != null && requesterEmail != undefined && requesterEmail != '') {
+    
+
+    res.render("passwordchange/index", { requesterEmail: requesterEmail});
+
+  }else{
+
+    res.send({code : 101, error : 'Password change error...'})
+  }
+
+});
+
+route.get('/getagreetoterms', (req, res)=>{
+
+  res.render('termsandconditions/index')
+})
+
 module.exports = route;

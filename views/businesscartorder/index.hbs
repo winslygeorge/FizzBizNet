@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order :  Brightlife</title>
+    <title> Cart Orders</title>
     <link rel="stylesheet" href="./../css/style.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
@@ -93,27 +93,31 @@
 
         
 
-        <div class="main">
-
-            <div class="levelHead">
-              <div class="searchbox">
-
-                <input type="search" name="search" id="searchbox" placeholder="Search...">
-                <img src="./../images/magnifying-glass.svg" alt="" srcset="" width="30" class="searchBox">
-
-              </div>
-              <div class="profileMe">
-                  {{#if loggedUser}}
-           <a href="/profile/{{{loggedUser.username}}}">     <h4>{{{loggedUser.username}}} </h4> </a>
-                               <img src="./../images/{{{loggedUser.profileimage}}}" alt="" srcset="" width="40px">
-
-                 {{else}}
-                <h4>Guest</h4>
-                                <img src="./../images/user.svg" alt="" srcset="" width="40px">
-
-                {{/if}}
-              </div>
-            </div>
+            <div class="main">
+            
+                <div class="levelHead">
+                    <div class="searchbox">
+                
+                        <input type="search" name="search" id="searchbox" placeholder="Search...">
+                        <img src="./../images/magnifying-glass.svg" alt="" srcset="" width="30" class="searchBox">
+                
+                    </div>
+                    <div class="profileMe">
+                        {{#if loggedUser}}
+                        <a href="/profile/{{{loggedUser.username}}}" style="text-decoration: none;">
+                            <h4 style="color: aqua;">{{{loggedUser.username}}} </h4>
+                        </a>
+                        <img src="./../images/{{{loggedUser.profileimage}}}" alt="" srcset="" height="40px" width="40px"
+                            style="border-radius: 100%;">
+                
+                        {{else}}
+                        <h4>Guest</h4>
+                        <img src="./../images/user.svg" alt="" srcset="" width="40px">
+                
+                        {{/if}}
+                    </div>
+                </div>
+         
 <div class="intro">Orders</div>
 
 <div class="cartOrders" style="margin: 0%; padding: 0%;">
@@ -149,7 +153,7 @@
                    <a href="/profile/{{{USERNAME}}}" style="text-decoration: none; color: rgb(78, 76, 76);"> {{{USERNAME}}} </a>
                 </td>
                 <td class="tablecell">
-                    <a href="/profile/{{{SERVICEID}}}" style="text-decoration: none; color: rgb(78, 76, 76);">  {{{SERVICEID}}}</a>
+                    <a href="/app/{{{appname}}}#service{{{SERVICEID}}}" style="text-decoration: none; color: rgb(78, 76, 76);">  {{{SERVICEID}}}</a>
                 </td>
                    <td class="tablecell">
                       {{{VENUE}}}
@@ -176,13 +180,18 @@
     <footer style="color: aquamarine;">
         <table width="76%" border="0" align="center" valign="bottom" cellspacing="0" cellpadding="0">
             <tr>
-            <td id="footer"><small>&copy; 2020 by Winslow Georgos. Proudly created with GeorgosTech.</small></td>
-            <td><img src="./../images/twitter.svg" alt="" style="width: 20px;"></td>
-                <td><img src="./../images/youtube.svg" alt="" style="width: 20px;"></td>
-                <td><img src="./../images/instagram.svg" alt="" style="width: 20px;"></td>
-                <td><img src="./../images/facebook.svg" alt="" style="width: 20px;"></td>
+                <td id="footer"><small>&copy; 2020 by Winslow Georgos. Proudly created with GeorgosTech.</small></td>
+                <td> <a href="https://twitter.com/GeorgosTechnol1"><img src="./../images/twitter.svg" alt=""
+                            style="width: 20px;"></a></td>
+                <td><a href="https://www.youtube.com/channel/UC3wWQmjAuvUcWIedf959Y0g"> <img src="./../images/youtube.svg"
+                            alt="" style="width: 20px;"></a></td>
+                <td> <a href="https://www.instagram.com/georgos_tech/"><img src="./../images/instagram.svg" alt=""
+                            style="width: 20px;"></a></td>
+                <td> <a href="https://www.facebook.com/georgos.winslow"><img src="./../images/facebook.svg" alt=""
+                            style="width: 20px;"></a></td>
             </tr>
-        </table></footer>
+        </table>
+    </footer>
     </div>
 
     <script>

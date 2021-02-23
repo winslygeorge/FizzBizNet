@@ -264,6 +264,7 @@ var profileIg = uname+'_'+Date.now()+'_'+Math.round(Math.random()* 1E9)+'.'+prof
     instagram : instagram,
     workTel : wokTel,
     isverified : 0,
+    agreedtoterms : "true",
         tablename: "USERS",
         operation : "insert"
 
@@ -307,43 +308,230 @@ var profileIg = uname+'_'+Date.now()+'_'+Math.round(Math.random()* 1E9)+'.'+prof
                 if(results.code  == 200 ){
 
 
-                    var email = {
-                        from: `Fizzbiznet  <omondiwinsly2@gmail.com>`,
-                        to: inputs.email,
-                        subject: "Verify Your Email",
-                        template: 'verify',
-                        context: {
-                            name: inputs.username,
-                            url: 'YOUR URL',
-                            title : 'Verify Email',
-                            code : code,
-                         
-                    
-                        },
-                    
-                        attachments: [{
-                            filename: 'FizzBizNet.png',
-                            path: path.join(__dirname, './../../email/views/images/FizzBizNet.png'),
-                            cid: 'logoimg' //same cid value as in the html img src
-                        },
-                        {
-                            filename: inputs.profileImage,
-                            path: path.join(__dirname, './../images/'+inputs.profileImage),
-                            cid: 'profileicon' //same cid value as in the html img src
-                        }]
-                    }
-                    
-                    gen.sendMail(options.generateEmailOpt(email.from,email.to, email.subject, email.template, email.context, email.attachments)).then(function(result){
-        
-                        console.log(result)
+                     var email = {
+                       from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
+                       to: inputs.email,
+                       subject: "Welcome to Fizzbiznet",
+                       template: "welcome",
+                       context: {
+                         name: inputs.username,
 
-                    res.redirect('/emailverification')
-                    }, function(error){
-        
-                        console.log(error)
-            
-                        res.send({code : 101, error : "error"})
-                    })
+                         title: "Welcome Email",
+                       },
+
+                       attachments: [
+                         {
+                           filename: "FizzBizNet.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/FizzBizNet.png"
+                           ),
+                           cid: "logoimg", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "featured-area-top.jpg",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/featured-area-top.jpg"
+                           ),
+                           cid: "areatopid", //same cid value as in the html img src
+                         },
+                         {
+                           filename:
+                             "hunters-race-MYbhN8KaaEc-unsplash (1).jpg",
+                           path: path.join(
+                             __dirname,
+                             "./../images/hunters-race-MYbhN8KaaEc-unsplash (1).jpg"
+                           ),
+                           cid: "huntersid", //same cid value as in the html img src
+                         },
+                         {
+                           filename:
+                             "Betting-Business-Scientific-Games-2018-Notes-Redemption-696x465.jpg",
+                           path: path.join(
+                             __dirname,
+                             "./../images/Betting-Business-Scientific-Games-2018-Notes-Redemption-696x465.jpg"
+                           ),
+                           cid: "betbiz", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "image-02.jpg",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/image-02.jpg"
+                           ),
+                           cid: "img02", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "image-03.jpg",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/image-03.jpg"
+                           ),
+                           cid: "img03", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "icon-01.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/icon-01.png"
+                           ),
+                           cid: "icon01", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "icon-02.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/icon-02.png"
+                           ),
+                           cid: "icon02", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "icon-03.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/icon-03.png"
+                           ),
+                           cid: "icon03", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "image-04.jpg",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/image-04.jpg"
+                           ),
+                           cid: "img04", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "facebook2x.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/facebook2x.png"
+                           ),
+                           cid: "facebookid", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "instagram2x.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/instagram2x.png"
+                           ),
+                           cid: "instagramid", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "twitter2x.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/twitter2x.png"
+                           ),
+                           cid: "twitterid", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "linkedin2x.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/linkedin2x.png"
+                           ),
+                           cid: "linkedlnid", //same cid value as in the html img src
+                         },
+                         {
+                           filename: "bee.png",
+                           path: path.join(
+                             __dirname,
+                             "./../../email/views/images/bee.png"
+                           ),
+                           cid: "beeid", //same cid value as in the html img src
+                         },
+                       ],
+                     };
+
+                     gen
+                       .sendMail(
+                         options.generateEmailOpt(
+                           email.from,
+                           email.to,
+                           email.subject,
+                           email.template,
+                           email.context,
+                           email.attachments
+                         )
+                       )
+                       .then(
+                         function (result) {
+                           console.log(result);
+
+                          
+                         },
+                         function (error) {
+                           console.log(error);
+                         
+                         }
+                       );
+
+                    setTimeout(function(){
+
+
+                         var email = {
+                           from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
+                           to: inputs.email,
+                           subject: "Verify Your Email",
+                           template: "verify",
+                           context: {
+                             name: inputs.username,
+                             url: "YOUR URL",
+                             title: "Verify Email",
+                             code: code,
+                           },
+
+                           attachments: [
+                             {
+                               filename: "FizzBizNet.png",
+                               path: path.join(
+                                 __dirname,
+                                 "./../../email/views/images/FizzBizNet.png"
+                               ),
+                               cid: "logoimg", //same cid value as in the html img src
+                             },
+                             {
+                               filename: inputs.profileImage,
+                               path: path.join(
+                                 __dirname,
+                                 "./../images/" + inputs.profileImage
+                               ),
+                               cid: "profileicon", //same cid value as in the html img src
+                             },
+                           ],
+                         };
+
+                         gen
+                           .sendMail(
+                             options.generateEmailOpt(
+                               email.from,
+                               email.to,
+                               email.subject,
+                               email.template,
+                               email.context,
+                               email.attachments
+                             )
+                           )
+                           .then(
+                             function (result) {
+                                   console.log(result);
+                                   
+  res.redirect("/emailverification");                             },
+                             function (error) {
+                                 console.log(error);
+                                   res.redirect("/emailverification");
+                             }
+                           );
+
+
+                    }, 3000)
+
+                   
+                    
+                    
+    
                     
         
         
@@ -495,6 +683,153 @@ function handleImageUpload(files){
 }
 
 
+route.post('/dbchangepass', (req, res) => {
+    
+    var useremail = clean.CleanData(req.body.email)
+
+    var password = clean.CleanData(req.body.password)
+
+    var passwd, passwdErr = null
+
+
+    var conpassword = clean.CleanData(req.body.conPassword)
+
+    if (useremail != null && useremail != undefined && password != null && password != undefined && conpassword != null && conpassword != undefined) {
+        
+        if (password.match(conpassword)) {
+
+            if (password.match(/^.*(?=.{6})(?=.*[0-9])(?=.*[A-Z]).*$/)) {
+
+                passwd = bycrypt.hashSync(password, bycrypt.genSaltSync(10))
+
+
+
+            } else {
+
+                passwdErr = "Password must contain at least one capital letter , one digital number and \n it must be at least six characters "
+            }
+
+        } else {
+
+            passwdErr = "Password do not match"
+        }
+
+        var updatepassword = {
+            
+            operation: 'update',
+            tablename: 'users',
+            password: passwd,
+            where: 'email',
+            val : useremail
+        }
+
+        if (updatepassword.password != null && updatepassword.password != undefined) {
+            
+            serveRequest.run(updatepassword).then(function (results) {
+
+                if (results.code == 200) {
+
+                    res.redirect('/login')
+                } else {
+
+                    res.render('passwordchange/index', { requesterEmail: useremail })
+
+                }
+            })
+
+
+        } else {
+            
+            res.render('passwordchange/index', { requesterEmail: useremail, error : passwdErr })
+
+
+        }
+
+       
+
+    } else {
+        
+        res.render('passwordchange/index', { requesterEmail: useremail })
+    }
+})
+
+
+route.post('/fizzbizpostcomment', (req, res)=>{
+
+  var comment = {
+
+    username: clean.CleanData(req.body.name),
+  
+    useremail: clean.CleanData(req.body.email),
+    
+    message : clean.CleanData(req.body.message),
+  }
+
+  if (comment.useremail != null && comment.useremail != undefined && comment.username != null && comment.username != undefined && comment.message != null && comment.message != undefined) {
+    
+
+    var email = {
+      from: `${comment.username}  <fizzbiznet@gmail.com>`,
+      to: 'fizzbiznet@gmail.com',
+      subject: 'Comment for Fizzbiznet',
+      template: "comment",
+      context: {
+        name: comment.username,
+
+        appname: 'Fizzbiznet',
+
+        replyto: comment.useremail,
+
+        content: comment.message,
+
+        title: "Comment page",
+      },
+
+      attachments: [
+        {
+          filename: "FizzBizNet.png",
+          path: path.join(
+            __dirname,
+            "./../../email/views/images/FizzBizNet.png"
+          ),
+          cid: "logoimg", //same cid value as in the html img src
+        },
+      ],
+    };
+
+    gen
+      .sendMail(
+        options.generateEmailOpt(
+          email.from,
+          email.to,
+          email.subject,
+          email.template,
+          email.context,
+          email.attachments
+        )
+      )
+      .then(
+        function (result) {
+          console.log(result);
+          res.render('home/index', {emailsuc : "Email was sent successfully"})
+        },
+        function (error) {
+          console.log(error);
+          res.render('home/index', { emailsuc: "Error sending email .. Please try again" })
+
+        }
+      );
+
+  } else {
+    
+    res.render('home/index', {emailerr : 'Please try again...'})
+  }
+})
+
+route.post("/agreetoterms", (req, res)=>{
+
+  res.redirect('/Register')
+});
 
 
 module.exports = route;

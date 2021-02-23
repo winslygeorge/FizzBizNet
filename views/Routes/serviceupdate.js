@@ -336,8 +336,97 @@ route.post('/updateaddservice', (req, res) => {
                         })
 
 
+                        var selectFollowers = {
+                            operation: "select",
+                            tablename: "followers",
 
-                        res.redirect('/app/' + fields.appname)
+                            fields: [],
+
+                            wfield: ["businessappid"],
+
+                            wvalue: [newservice.businessid],
+                        };
+
+                        dbcon.run(selectFollowers).then(function (results) {
+                            if (results.code == 200) {
+                                var followers = results.result.rows;
+
+                                console.log(followers.length);
+
+                                if (followers.length == 0) {
+                                    return res.redirect('/app/' + fields.appname)
+                                }
+                                followers.forEach((follower) => {
+                                    var getEmail = follower.USEREMAIL;
+
+                                    var getUsername = follower.USERNAME;
+
+                                    console.log(getEmail);
+
+                                    var email = {
+                                        from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
+                                        to: getEmail,
+                                        subject: "New Service Added",
+                                        template: "newservice",
+                                        context: {
+
+                                            username : getUsername,
+
+                                            appname: fields.appname,
+                                        
+                                            servicename: newservice.servicename,
+
+                                            servicedesc: newservice.servicedesc,
+
+                                            title: "New Service page",
+                                        },
+
+                                        attachments: [
+                                            {
+                                                filename: "FizzBizNet.png",
+                                                path: path.join(
+                                                    __dirname,
+                                                    "./../../email/views/images/FizzBizNet.png"
+                                                ),
+                                                cid: "logoimg", //same cid value as in the html img src
+                                            }
+                                
+                                        ],
+                                    };
+
+                                    gen
+                                        .sendMail(
+                                            options.generateEmailOpt(
+                                                email.from,
+                                                email.to,
+                                                email.subject,
+                                                email.template,
+                                                email.context,
+                                                email.attachments
+                                            )
+                                        )
+                                        .then(
+                                            function (result) {
+                                                console.log(result);
+                                            },
+                                            function (error) {
+                                                console.log(error);
+                                            }
+                                        );
+
+                                })
+                            }
+                        })
+
+                        setTimeout(function () {
+                            res.redirect('/app/' + fields.appname)
+                        }, 7000);
+                    
+                
+                
+
+
+                        
                     } else {
 
                         console.log(results.result)
@@ -590,6 +679,91 @@ route.post('/updateaddvideo', isAuth, (req, res) => {
         })
 
     })
+
+route.post('/emailpasswordchangerequest', (req, res) => {
+    
+    var recEmail = clean.CleanData(req.body.email)
+
+    var selectEmail = {
+
+        operation: 'select',
+
+        tablename: 'users',
+
+        fields : [],
+        
+        wfield: ['email'],
+        wvalue : [recEmail]
+        
+    }
+
+    dbcon.run(selectEmail).then(function (results) {
+        
+        if (results.code == 200) {
+
+            var user = results.result.rows[0]
+
+
+            var email = {
+                from: `Fizzbiznet  <fizzbiznet@gmail.com>`,
+                to: recEmail,
+                subject: "Change Password",
+                template: "passwordchange",
+                context: {
+
+                    username: user.USERNAME,
+
+                    useremail : recEmail,
+
+                    title: "Password change",
+                },
+
+                attachments: [
+                    {
+                        filename: "FizzBizNet.png",
+                        path: path.join(
+                            __dirname,
+                            "./../../email/views/images/FizzBizNet.png"
+                        ),
+                        cid: "logoimg", //same cid value as in the html img src
+                    }
+
+                ],
+            };
+
+            gen
+                .sendMail(
+                    options.generateEmailOpt(
+                        email.from,
+                        email.to,
+                        email.subject,
+                        email.template,
+                        email.context,
+                        email.attachments
+                    )
+                )
+                .then(
+                    function (result) {
+                        console.log(result);
+
+                        res.send({code : 200})
+                    },
+                    function (error) {
+                        console.log(error);
+
+                        res.send({code : 101})
+                    }
+                );
+            
+    
+
+
+        } else {
+            
+            res.send({code : 400})
+        }
+    })
+})
 
 
     

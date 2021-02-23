@@ -16,41 +16,68 @@
         
     <header class="headerContainer">
         <div class="container1">
-             <div class="icon" >
-
+            <div class="icon">
+    
                 <img src="./../images/FizzBizNet.png" alt="" srcset="" width="100px" height="80px">
             </div>
-        <div class="appbar">
-           
-            <div class="appname"><h1 class="bizTitle">FIZZBIZNET</h1></div>
+            <div class="appbar">
+    
+                <div class="appname">
+                    <h1 class="bizTitle">FIZZBIZNET</h1>
+                </div>
+            </div>
+    
+    
+            <div class="menu">
+                <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;" />
+    
+            </div>
+            <div class="profileIcon" style="order: 3; padding: 2%;">
+                {{#if loggedUser}}
+                <a href="/profile/{{{loggedUser.username}}}"> <img class="loggeduserIcon"
+                        src="./../images/{{{loggedUser.profileimage}}}" class="menuIcon" style="width: 40px;" /></a>
+    
+                {{else}}
+                <a href="/login"> <img src="./../images/user.svg" class="menuIcon" style="width: 40px;" /></a>
+                {{/if}}
+            </div>
         </div>
-
-          
-        <div class="menu">
-            <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;"/>
-            
+    
+        <div class="menuList">
+            <div class="menu">
+                <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;" />
+    
+            </div>
+    
+            <a href="/" class="menuitem"> <img src="./../images/home.svg" alt="" srcset="" width="30px" style="">
+                <h4>Home</h4>
+            </a>
+    
+            <a class="menuitem" id="showToolbar" href="/apps/all"> <img src="./../images/customer.svg" alt="" srcset=""
+                    width="30px" style="">
+                <h4> Product&Services</h4>
+            </a>
+            <a href="/#howItWork" class="menuitem"> <img src="./../images/team.svg" alt="" srcset="" width="30px" style="">
+                <h4>About</h4>
+            </a>
+            {{#if loggedUser}}
+            <a href="/profile/{{{loggedUser.username}}}" class="menuitem"> <img src="./../images/user.svg" alt="" srcset=""
+                    width="30px" style="">
+                <h4> My Profile</h4>
+            </a>
+            {{else}}
+            <a href="/login" class="menuitem"> <img src="./../images/log-in.svg" alt="" srcset="" width="30px" style="">
+                <h4> SignIn </h4>
+            </a>
+            {{/if}}
+            <a href="/logout" class="menuitem"><img src="./../images/log-out.svg" alt="" srcset="" width="30px" style="">
+                <h4>SignOut </h4>
+            </a>
         </div>
-        <div class="profileIcon" style="order: 3; padding: 2%;">
-            <img src="./../images/user.svg" class="menuIcon" style="width: 40px;"/>
-        </div>
-    </div>
-                
-    <div class="menuList">
-        <div class="menu">
-            <img src="./../images/icons8-menu (1).svg" class="menuIcon" style="width: 60px;"/>
-            
-        </div>
-        <a href="./../profile" class="menuitem"> <img   src="./../images/home.svg" alt="" srcset="" width="30px" style=""> <h4>Home</h4></a>
-        <a  class="menuitem" id="showToolbar" href="./../homezapps"> <img   src="./../images/customer.svg" alt="" srcset="" width="30px" style=""> <h4> Product&Services</h4></a>
-        <a href="./../home" class="menuitem"> <img   src="./../images/team.svg" alt="" srcset="" width="30px" style=""> <h4>About</h4></a>
-        <a href="./../Register" class="menuitem"> <img    src="./../images/add (1).svg" alt="" srcset="" width="30px" style=""> <h4> Register</h4></a>
-        <a href="./../login" class="menuitem"> <img   src="./../images/log-in.svg" alt="" srcset="" width="30px" style=""> <h4> SignIn </h4></a>
-        <a href="./../logout" class="menuitem"><img   src="./../images/log-out.svg" alt="" srcset="" width="30px" style=""> <h4>SignOut </h4></a>
-        </div>
-
-
-       
-       
+    
+    
+    
+    
     </header>
     
     <menu type="toolbar" class="toolbarList">

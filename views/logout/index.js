@@ -23,7 +23,7 @@ route.get('/logout', isAuth, (req, res)=>{
             res.redirect('/home')
         }else{
 
-            console.log('user is guest')
+            res.redirect('/apps/all')
         }
     })
 

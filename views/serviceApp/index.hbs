@@ -6,6 +6,11 @@
     <title>FizzBizNet: {{{row.BUSINESSNAME}}}</title>
     <link rel="stylesheet" href="./../css/style.css">
     <link rel="stylesheet" href="./../css/serviceApp.css">
+
+                <script type="text/javascript"
+                    src="https://platform-api.sharethis.com/js/sharethis.js#property=60292bb6f8ce400012e81636&product=inline-share-buttons"
+                    async="async"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     
     <script src="./../js/main.js"></script>
@@ -23,7 +28,7 @@
             </div>
         <div class="appbar">
            
-            <div class="appname"><h1 class="bizTitle"><em>{{{row.BUSINESSNAME}}}</em></h1></div>
+            <div class="appname"><h2 class="bizTitle"><em>{{{row.BUSINESSNAME}}}</em></h2></div>
         </div>
 
           
@@ -66,14 +71,14 @@
             <h4> My Profile</h4>
         </a>
         {{else}}
-        <a href="/Register" class="menuitem"> <img src="./../images/add (1).svg" alt="" srcset="" width="30px" style="">
+        <a href="/getagreetoterms" class="menuitem"> <img src="./../images/add (1).svg" alt="" srcset="" width="30px" style="">
             <h4> Register</h4>
         </a>
         <a href="/login" class="menuitem"> <img src="./../images/log-in.svg" alt="" srcset="" width="30px" style="">
             <h4> SignIn </h4>
         </a>
         {{/if}}
-        <a href="./../logout" class="menuitem"><img src="./../images/log-out.svg" alt="" srcset="" width="30px" style="">
+        <a href="/logout" class="menuitem"><img src="./../images/log-out.svg" alt="" srcset="" width="30px" style="">
             <h4>SignOut </h4>
         </a>
 
@@ -151,7 +156,9 @@
 
 
 </div>
+
 <main class="column1" id="main">
+
 
    
     <div  class="sub-column-1" id="missionSection">
@@ -193,10 +200,10 @@
 <div class="sub-column-2" id="quotes">
     <h3 class="subTitle">Admin Handle</h3>
     <p>
-       <a href="/businessorders/{{{row.ID}}}"> <button 
+       <a href="/businessorders/{{{row.ID}}}?appname={{{row.BUSINESSNAME}}}"> <button 
             style="background-color: orange; color: white; padding:2%; border: 2px solid orange; border-radius:4px;">Pending
             Orders</button> </a>
-      <a href="/businesscartorders/{{{row.ID}}}">  <button 
+      <a href="/businesscartorders/{{{row.ID}}}?appname={{{row.BUSINESSNAME}}}">  <button 
             style="background-color: green; color : white; padding:2%; border: 2px solid green; border-radius :4px;">Cart
             Orders</button></a>
             <br>
@@ -306,15 +313,15 @@
 
         <div class="servicesCol">
             {{#each services}}
-<div class="sub-column-2">
+<div class="sub-column-2" id="service{{{SERVICEID}}}">
     <h3>{{{SERVICENAME}}}</h3>
-    <img src="./../images/{{{SERVICEICON}}}" alt="" srcset="" >
+    <img src="./../images/{{{SERVICEICON}}}" alt="" srcset="" height="400px">
     <p>
 {{{SERVICEDESC}}}    </p>
 
 <br>
 <p style="color: white;">
-<b>Ksh. {{{PRICE}}}  <button id = "addorder" onclick="handleorderbtn({{{ID}}});">+</button></b></p>
+<b>{{{PRICE}}}  <button id = "addorder" onclick="handleorderbtn({{{ID}}});">+</button></b></p>
 
 </div>
 <div>
@@ -464,8 +471,15 @@
 {{/if}}
 
                 </div>
+
             </div>
         </div>
+
+        <div class="sub-column-2" id="reviewsDiv">
+            <h3>Share App</h3>
+                <div class="sharethis-inline-share-buttons" style="margin: 1%;"></div>
+
+            </div>
 
     </div>
 </main>
@@ -494,8 +508,8 @@
     <div  id="gallerycarosol">
 
 {{#each images}}
-      <a href="./../images/{{{IMAGELINK}}}">  <img src="./../images/{{{IMAGELINK}}}" class="imagesIng" alt="" srcset="" id="img1"></a>
-        <br>
+      <img src="./../images/{{{IMAGELINK}}}" class="imagesIng" alt="" srcset="" id="img1"  >
+        
       
       {{/each}}
        
@@ -608,10 +622,10 @@
     <table width="76%" border="0" align="center" valign="bottom" cellspacing="0" cellpadding="0">
         <tr>
         <td id="footer"><small>&copy; 2020 by Winslow Georgos. Proudly created with GeorgosTech.</small></td>
-        <td><img src="./../images/twitter.svg" alt="" style="width: 20px;"></td>
-            <td><img src="./../images/youtube.svg" alt="" style="width: 20px;"></td>
-            <td><img src="./../images/instagram.svg" alt="" style="width: 20px;"></td>
-            <td><img src="./../images/facebook.svg" alt="" style="width: 20px;"></td>
+        <td> <a href="https://twitter.com/GeorgosTechnol1"><img src="./../images/twitter.svg" alt="" style="width: 20px;"></a></td>
+            <td><a href="https://www.youtube.com/channel/UC3wWQmjAuvUcWIedf959Y0g"> <img src="./../images/youtube.svg" alt="" style="width: 20px;"></a></td>
+            <td> <a href="https://www.instagram.com/georgos_tech/"><img src="./../images/instagram.svg" alt="" style="width: 20px;"></a></td>
+            <td> <a href="https://www.facebook.com/georgos.winslow"><img src="./../images/facebook.svg" alt="" style="width: 20px;"></a></td>
         </tr>
     </table></footer>
 
